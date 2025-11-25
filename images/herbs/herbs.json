@@ -1,0 +1,192 @@
+[
+  {
+    "name": "枸杞",
+    "img": "images/herbs/gouqi.jpg",
+    "desc": "滋补肝肾，益精明目，常用于气血不足者。"
+  },
+  {
+    "name": "人参",
+    "img": "images/herbs/renshen.jpg",
+    "desc": "大补元气，益脾肺，生津安神。"
+  },
+  {
+    "name": "菊花",
+    "img": "images/herbs/jvhua.jpg",
+    "desc": "清热平肝，明目解毒，常用于头痛、目赤者。"
+  },
+  {
+    "name": "槟榔",
+    "img": "images/herbs/binglang.jpg",
+    "desc": "杀虫，消积，行气，利水，截疟。"
+  },
+  {
+    "name": "麻黄",
+    "img": "images/herbs/mahuang.jpg",
+    "desc": "发汗解表，宣肺平喘，利水消肿。"
+  },
+  {
+    "name": "桂枝",
+    "img": "images/herbs/guizhi.jpg",
+    "desc": "发汗解表、温通经脉、温助阳气。"
+  },
+  {
+    "name": "紫苏叶",
+    "img": "images/herbs/zisuye.jpg",
+    "desc": "解表散寒，行气和胃。用于风寒感冒，咳嗽呕恶，妊娠呕吐，鱼蟹中毒"
+  },
+  {
+    "name": "荆芥",
+    "img": "images/herbs/jingjie.jpg",
+    "desc": "解感冒头痛、促进疹子发出、改善皮肤疮肿"
+  },
+  {
+    "name": "防风",
+    "img": "images/herbs/fangfeng.jpg",
+    "desc": "驱散风寒、缓解疼痛"
+  },
+  {
+    "name": "羌活",
+    "img": "images/herbs/qianghuo.jpg",
+    "desc": "驱寒发汗、缓解关节疼痛"
+  },
+  {
+    "name": "细辛",
+    "img": "images/herbs/xixin.jpg",
+    "desc": "驱寒止痛、通鼻窍"
+  },
+  {
+    "name": "白芷",
+    "img": "images/herbs/baizhi.jpg",
+    "desc": "驱寒止痛、通鼻窍、减少异常分泌物。"
+  },
+  {
+    "name": "辛夷",
+    "img": "images/herbs/xinyi.jpg",
+    "desc": "驱散风寒，缓解鼻塞"
+  },
+  {
+    "name": "生姜",
+    "img": "images/herbs/shengjiang.jpg",
+    "desc": "驱寒暖胃、抗氧化、促进消化"
+  },
+  {
+    "name": "薄荷",
+    "img": "images/herbs/bohe.jpg",
+    "desc": "缓解发热头痛、提神醒脑、改善咽喉肿痛和皮肤瘙痒"
+  },
+  {
+    "name": "牛蒡子",
+    "img": "images/herbs/niupangzi.jpg",
+    "desc": "牛蒡子能退烧止痛、帮助疹子顺利发出，缓解咽喉肿痛。"
+  },
+  {
+    "name": "桑叶",
+    "img": "images/herbs/sangye.jpg",
+    "desc": "缓解风热感冒、肺热咳嗽，清肝明目"
+  },
+  {
+    "name": "葛根",
+    "img": "images/herbs/gegen.jpg",
+    "desc": "葛根能退烧、缓解肌肉酸痛，生津止渴，还能帮助发疹和止腹泻。"
+  },
+  {
+    "name": "柴胡",
+    "img": "images/herbs/chaihu.jpg",
+    "desc": "柴胡具有退烧、缓解情绪不畅、改善内脏下垂的功效。"
+  },
+  {
+    "name": "升麻",
+    "img": "images/herbs/shengma.jpg",
+    "desc": "发表透疹，清热解毒，升阳举陷。"
+  },
+  {
+    "name": "蔓荆子",
+    "img": "images/herbs/manjingzi.jpg",
+    "desc": "驱散风热、缓解头眼部不适"
+  },
+  {
+    "name": "淡豆豉",
+    "img": "images/herbs/dandouchi.jpg",
+    "desc": "缓解感冒症状、舒缓烦躁情绪、调节体内热气"
+  },
+  {
+    "name": "木贼",
+    "img": "images/herbs/muzei.jpg",
+    "desc": "疏风散热，解肌，退翳。"
+  },
+  {
+    "name": "栀子",
+    "img": "images/herbs/zhizi.jpg",
+    "desc": "缓解上火烦躁，清除湿热，解毒止血"
+  },
+  {
+    "name": "天花粉",
+    "img": "images/herbs/tianhuafen.jpg",
+    "desc": "清热降火、缓解口渴、消肿排脓"
+  },
+  {
+    "name": "芦根",
+    "img": "images/herbs/lugen.jpg",
+    "desc": "清解体内热气、缓解口干口渴、平复烦躁情绪、减轻恶心反胃、改善排尿困难。"
+  },
+  {
+    "name": "淡竹叶",
+    "img": "images/herbs/danzhuye.jpg",
+    "desc": "清热降火，缓解烦渴和尿路不适"
+  },
+  {
+    "name": "金银花",
+    "img": "images/herbs/jinyinhua.jpg",
+    "desc": "消炎退热、缓解上火和风热症状。"
+  },
+  {
+    "name": "连翘",
+    "img": "images/herbs/lianqiao.jpg",
+    "desc": "清除体内热毒、缓解肿胀、消散肿块"
+  },
+  {
+    "name": "板蓝根",
+    "img": "images/herbs/banlangen.jpg",
+    "desc": "清热解毒的功效，可帮助缓解喉咙肿痛和降温。"
+  },
+  {
+    "name": "鱼腥草",
+    "img": "images/herbs/yvxingcao.jpg",
+    "desc": "清热解毒，利尿消肿。治肺炎，肺脓疡，热痢，疟疾，水肿，淋病，白带，痈肿，痔疮，脱肛，湿疹，秃疮，疥癣。"
+  },
+  {
+    "name": "大青叶",
+    "img": "images/herbs/daqingye.jpg",
+    "desc": "清热解毒、凉血消肿"
+  },
+  {
+    "name": "穿心莲",
+    "img": "images/herbs/chuanxinlian.jpg",
+    "desc": "消炎退热，缓解红肿疼痛，改善湿热"
+  },
+  {
+    "name": "生地黄",
+    "img": "images/herbs/shengdihuang.jpg",
+    "desc": "清除体内热毒、滋养阴液，帮助调节身体机能。"
+  },
+  {
+    "name": "玄参",
+    "img": "images/herbs/xuanshen.jpg",
+    "desc": "调节体内火气、减轻皮肤红肿"
+  },
+  {
+    "name": "牡丹皮",
+    "img": "images/herbs/mudanpi.jpg",
+    "desc": "以清热凉血、活血化瘀、退虚热为主要功效"
+  },
+  {
+    "name": "赤芍",
+    "img": "images/herbs/chishao.jpg",
+    "desc": "清热凉血、消肿止痛"
+  },
+  {
+    "name": "紫草",
+    "img": "images/herbs/zicao.jpg",
+    "desc": "清热凉血、活血解毒、透疹消斑"
+  }
+]

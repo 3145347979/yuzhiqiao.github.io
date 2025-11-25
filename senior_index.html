@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>老年版 - 愈知桥</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="senior-theme">
+  <div id="loader" class="loader">
+    <div class="logo-splash">
+      <img src="images/logo.jpg" alt="logo" />
+      <h1>老年版 - 愈知桥</h1>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="logo"><img src="images/logo.jpg" alt="logo" /><span>愈知桥</span></div>
+    <nav class="nav">
+        <!-- 导航栏将由JavaScript动态生成 -->
+    </nav>
+    <div class="user-actions">
+      <div id="userInfo" class="user-info">
+        <span id="userRoleDisplay">老年版</span>
+        <button id="logoutBtn" class="btn small">退出</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 语音助手浮动按钮 -->
+  <div class="voice-assistant">
+    <button class="btn-speech" id="speechToggle">
+      <span class="voice-icon">🎤</span>
+      <span class="voice-text">语音助手</span>
+    </button>
+  </div>
+
+  <div class="page-header senior">
+    <div class="header-content">
+      <h2>老年康养中心</h2>
+      <p>个性化康养方案，专业健康指导，让您的晚年生活更健康、更幸福</p>
+      <div class="weather-widget">
+        <div class="weather-info">
+          <span class="weather-icon">🌤️</span>
+          <span class="weather-temp">26°C</span>
+          <span class="weather-desc">晴朗</span>
+        </div>
+        <div class="date-info">
+          <span id="currentDate"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <!-- 健康概览 -->
+    <section class="health-overview" style="margin-bottom: 40px;">
+      <div class="overview-cards">
+        <div class="overview-card heart-rate" data-aos="fade-up">
+          <div class="card-header">
+            <div class="card-icon">❤️</div>
+            <h3>心率</h3>
+          </div>
+          <div class="card-value">72</div>
+          <div class="card-unit">次/分钟</div>
+          <div class="card-status normal">正常</div>
+          <div class="card-trend">
+            <span class="trend-icon">↗</span>
+            <span>较昨日+2</span>
+          </div>
+        </div>
+        
+        <div class="overview-card blood-pressure" data-aos="fade-up" data-aos-delay="100">
+          <div class="card-header">
+            <div class="card-icon">💓</div>
+            <h3>血压</h3>
+          </div>
+          <div class="card-value">125/80</div>
+          <div class="card-unit">mmHg</div>
+          <div class="card-status normal">正常</div>
+          <div class="card-trend">
+            <span class="trend-icon">→</span>
+            <span>保持稳定</span>
+          </div>
+        </div>
+        
+        <div class="overview-card steps" data-aos="fade-up" data-aos-delay="200">
+          <div class="card-header">
+            <div class="card-icon">👣</div>
+            <h3>今日步数</h3>
+          </div>
+          <div class="card-value">5,832</div>
+          <div class="card-unit">步</div>
+          <div class="progress-circle">
+            <div class="circle-bg"></div>
+            <div class="circle-progress" style="--progress: 78;"></div>
+            <div class="circle-text">78%</div>
+          </div>
+          <div class="card-target">目标：7,500步</div>
+        </div>
+        
+        <div class="overview-card sleep" data-aos="fade-up" data-aos-delay="300">
+          <div class="card-header">
+            <div class="card-icon">😴</div>
+            <h3>睡眠质量</h3>
+          </div>
+          <div class="card-value">7.2</div>
+          <div class="card-unit">小时</div>
+          <div class="sleep-quality">
+            <div class="quality-bar excellent"></div>
+            <div class="quality-bar good"></div>
+            <div class="quality-bar fair active"></div>
+            <div class="quality-bar poor"></div>
+          </div>
+          <div class="card-status good">良好</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 快速功能入口 -->
+    <section class="quick-actions" style="margin-bottom: 50px;">
+      <h3 class="section-title">快速服务</h3>
+      <div class="features-grid">
+        <div class="feature-card" onclick="window.location.href='plan.html'" data-aos="zoom-in">
+          <div class="feature-icon">📋</div>
+          <h3>康养方案</h3>
+          <p>获取个性化的康养计划，包括运动、饮食、作息等全方位指导</p>
+          <div class="feature-badge">推荐</div>
+          <button class="btn primary" style="margin-top: 15px; width: 100%;">查看方案</button>
+        </div>
+        
+        <div class="feature-card" onclick="window.location.href='ai_doctor.html'" data-aos="zoom-in" data-aos-delay="100">
+          <div class="feature-icon">👨‍⚕️</div>
+          <h3>AI医生咨询</h3>
+          <p>24小时在线健康咨询，解答您的健康疑问</p>
+          <button class="btn primary" style="margin-top: 15px; width: 100%;">立即咨询</button>
+        </div>
+        
+        <div class="feature-card" data-aos="zoom-in" data-aos-delay="200">
+          <div class="feature-icon">💊</div>
+          <h3>用药提醒</h3>
+          <p>智能用药提醒服务，再也不怕忘记吃药</p>
+          <div class="medication-schedule">
+            <div class="med-time">08:00</div>
+            <div class="med-name">降压药</div>
+            <div class="med-status pending">待服用</div>
+          </div>
+          <button class="btn primary" style="margin-top: 15px; width: 100%;">设置提醒</button>
+        </div>
+        
+        <div class="feature-card" data-aos="zoom-in" data-aos-delay="300">
+          <div class="feature-icon">📈</div>
+          <h3>健康监测</h3>
+          <p>记录和分析您的健康数据，及时发现异常</p>
+          <div class="health-metrics">
+            <div class="metric">
+              <span>体重</span>
+              <span class="metric-value">65kg</span>
+            </div>
+            <div class="metric">
+              <span>血糖</span>
+              <span class="metric-value">5.6</span>
+            </div>
+          </div>
+          <button class="btn primary" style="margin-top: 15px; width: 100%;">查看数据</button>
+        </div>
+	</div>
+    </section>
+
+    <!-- 今日健康建议 -->
+    <section class="health-tips" style="margin-bottom: 50px;">
+      <div class="tips-header">
+        <h3 class="section-title">今日健康建议</h3>
+        <div class="tips-date" id="tipsDate"></div>
+      </div>
+      <div class="tips-grid">
+        <div class="tip-card diet-tip" data-aos="fade-right">
+          <div class="tip-icon">🥗</div>
+          <div class="tip-content">
+            <h4>饮食建议</h4>
+            <p>今日推荐：山药枸杞粥，健脾养胃，适合秋季食用。建议搭配清炒时蔬。</p>
+            <div class="tip-details">
+              <span class="detail-item">🍚 主食：杂粮粥</span>
+              <span class="detail-item">🥦 蔬菜：西兰花</span>
+              <span class="detail-item">🐟 蛋白质：清蒸鱼</span>
+            </div>
+          </div>
+        </div>
+        <div class="tip-card exercise-tip" data-aos="fade-right" data-aos-delay="100">
+          <div class="tip-icon">🏃</div>
+          <div class="tip-content">
+            <h4>运动建议</h4>
+            <p>建议进行30分钟温和散步，配合深呼吸练习。避免剧烈运动。</p>
+            <div class="exercise-schedule">
+              <div class="schedule-item">
+                <span>时间：上午9-10点</span>
+              </div>
+              <div class="schedule-item">
+                <span>强度：中等</span>
+              </div>
+              <div class="schedule-item">
+                <span>时长：30分钟</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tip-card rest-tip" data-aos="fade-right" data-aos-delay="200">
+          <div class="tip-icon">💤</div>
+          <div class="tip-content">
+            <h4>作息建议</h4>
+            <p>保证7-8小时睡眠，午休不超过1小时。建议晚上10点前入睡。</p>
+            <div class="sleep-schedule">
+              <div class="time-slot">
+                <span>起床</span>
+                <span class="time">06:30</span>
+              </div>
+              <div class="time-slot">
+                <span>午休</span>
+                <span class="time">12:30-13:30</span>
+              </div>
+              <div class="time-slot">
+                <span>入睡</span>
+                <span class="time">22:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 紧急联系 -->
+    <section class="emergency-contact" data-aos="fade-up">
+      <div class="emergency-content">
+        <div class="emergency-info">
+          <h3>紧急联系</h3>
+          <p>如有紧急情况，请立即联系家人或拨打急救电话</p>
+          <div class="contact-buttons">
+            <button class="btn emergency-btn family">
+              <span class="btn-icon">👨‍👩‍👧‍👦</span>
+              联系家人
+            </button>
+            <button class="btn emergency-btn ambulance">
+              <span class="btn-icon">🚑</span>
+              拨打120
+            </button>
+            <button class="btn emergency-btn neighbor">
+              <span class="btn-icon">🏠</span>
+              联系邻居
+            </button>
+          </div>
+        </div>
+        <div class="emergency-graphic">
+          <div class="pulse-circle"></div>
+          <div class="sos-text">SOS</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 活动日历 -->
+    <section class="activity-calendar" style="margin: 50px 0;">
+      <h3 class="section-title">本周活动安排</h3>
+      <div class="calendar-grid">
+        <div class="calendar-day" data-aos="flip-left">
+          <div class="day-header">周一</div>
+          <div class="day-content">
+            <div class="activity morning">
+              <span class="activity-time">09:00</span>
+              <span class="activity-name">晨练</span>
+            </div>
+            <div class="activity afternoon">
+              <span class="activity-time">14:00</span>
+              <span class="activity-name">健康讲座</span>
+            </div>
+          </div>
+        </div>
+        <div class="calendar-day" data-aos="flip-left" data-aos-delay="100">
+          <div class="day-header">周二</div>
+          <div class="day-content">
+            <div class="activity morning">
+              <span class="activity-time">09:30</span>
+              <span class="activity-name">太极拳</span>
+            </div>
+          </div>
+        </div>
+        <div class="calendar-day" data-aos="flip-left" data-aos-delay="200">
+          <div class="day-header">周三</div>
+          <div class="day-content">
+            <div class="activity morning">
+              <span class="activity-time">10:00</span>
+              <span class="activity-name">手工课</span>
+            </div>
+          </div>
+        </div>
+        <div class="calendar-day" data-aos="flip-left" data-aos-delay="300">
+          <div class="day-header">周四</div>
+          <div class="day-content">
+            <div class="activity afternoon">
+              <span class="activity-time">15:00</span>
+              <span class="activity-name">音乐欣赏</span>
+            </div>
+          </div>
+        </div>
+        <div class="calendar-day" data-aos="flip-left" data-aos-delay="400">
+          <div class="day-header">周五</div>
+          <div class="day-content">
+            <div class="activity morning">
+              <span class="activity-time">09:00</span>
+              <span class="activity-name">健康检测</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 愈知桥：学生就业与年人康复双端价值共生做康养生态先行者</p>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/tts_stt.js"></script>
+  <script src="js/animation.js"></script>
+  <script>
+    window.pageName = 'senior_index';
+    
+    // 设置老年版用户
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.authManager) {
+        const userData = {
+          role: 'senior',
+          loginTime: new Date().toISOString(),
+          isLoggedIn: true
+        };
+        localStorage.setItem('currentUser', JSON.stringify(userData));
+        window.authManager.currentUser = userData;
+        window.authManager.updateUI();
+      }
+
+      // 设置当前日期
+      const now = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+      document.getElementById('currentDate').textContent = now.toLocaleDateString('zh-CN', options);
+      document.getElementById('tipsDate').textContent = now.toLocaleDateString('zh-CN', { month: 'long', day: 'numeric' });
+      }
+    });
+  </script>
+</body>
+</html>

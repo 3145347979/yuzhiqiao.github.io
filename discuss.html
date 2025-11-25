@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生论坛 - 愈知桥</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --primary-color: #4a9e8a;
+            --primary-light: #6bb8a7;
+            --primary-dark: #2d7a68;
+            --secondary-color: #f5a25d;
+            --accent-color: #ff7e5f;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --gray-color: #6c757d;
+            --light-gray: #e9ecef;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+		
+
+        body {
+            background-color: #f8f9fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* 主要内容区 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        /* 搜索和分类 */
+        .search-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 50px 0 0 50px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-box button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 0 50px 50px 0;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        
+        .search-box button:hover {
+            background-color: var(--primary-dark);
+            gap: 12px;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .category-tag {
+            background-color: var(--light-gray);
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .category-tag:hover, .category-tag.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* 帖子列表 */
+        .posts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .post-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            transform: translateY(0);
+        }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .post-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .post-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 15px;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+
+        .post-content {
+            padding: 20px;
+        }
+
+        .post-excerpt {
+            color: var(--gray-color);
+            margin-bottom: 15px;
+        }
+
+        .post-footer {
+            padding: 15px 20px;
+            background-color: var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--gray-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .post-action:hover {
+            color: var(--primary-color);
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            color: var(--primary-dark);
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-widget {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .widget-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+            color: var(--primary-dark);
+        }
+
+        .popular-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .popular-post {
+            display: flex;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .popular-post:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .popular-post img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .popular-post-content h4 {
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+
+        .popular-post-content .post-meta {
+            font-size: 0.8rem;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .user-stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--gray-color);
+        }
+
+        /* 创建帖子按钮 */
+        .create-post-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 25px;
+            height: 60px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(255, 126, 95, 0.3);
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 99;
+            overflow: hidden;
+        }
+        
+        .create-post-btn i {
+            font-size: 1.3rem;
+            transition: var(--transition);
+        }
+        
+        .create-post-btn .btn-text {
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        
+        .create-post-btn:hover {
+            transform: translateY(-3px);
+            background-color: #ff6b4a;
+            box-shadow: 0 6px 25px rgba(255, 126, 95, 0.4);
+            padding: 0 30px;
+        }
+        
+        .create-post-btn:hover .btn-text {
+            transform: translateX(5px);
+        }
+        
+        /* 模态框图标优化 */
+        .modal-header i {
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+        
+        .modal-title {
+            display: flex;
+            align-items: center;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .search-box button span {
+                display: none;
+            }
+            
+            .search-box button {
+                padding: 0 20px;
+            }
+            
+            .create-post-btn .btn-text {
+                display: none;
+            }
+            
+            .create-post-btn {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                justify-content: center;
+                padding: 0;
+            }
+            
+            .create-post-btn:hover {
+                padding: 0;
+            }
+        }
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .post-card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .post-card:nth-child(2) { animation-delay: 0.1s; }
+        .post-card:nth-child(3) { animation-delay: 0.2s; }
+        .post-card:nth-child(4) { animation-delay: 0.3s; }
+        .post-card:nth-child(5) { animation-delay: 0.4s; }
+		.post-card:nth-child(6) { animation-delay: 0.5s; }
+		.post-card:nth-child(7) { animation-delay: 0.6s; }
+		.post-card:nth-child(8) { animation-delay: 0.7s; }
+		.post-card:nth-child(9) { animation-delay: 0.8s; }
+
+        /* 模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 158, 138, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+			}
+		/* 帖子筛选动画 */
+		.post-card {
+		    animation: fadeIn 0.5s ease forwards;
+		    transition: all 0.3s ease;
+		}
+		
+		@keyframes fadeIn {
+		    from { 
+		        opacity: 0; 
+		        transform: translateY(20px); 
+		    }
+		    to { 
+		        opacity: 1; 
+		        transform: translateY(0); 
+		    }
+		}
+        }
+		/* 帖子卡片优化 */
+		.post-card {
+		    animation: fadeIn 0.5s ease forwards;
+		    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		    transform: translateZ(0); /* 开启硬件加速 */
+		    will-change: transform, opacity; /* 提示浏览器优化 */
+		    backface-visibility: hidden; /* 修复闪烁问题 */
+		    -webkit-font-smoothing: subpixel-antialiased; /* 字体抗锯齿 */
+		}
+		
+		/* 筛选动画优化 */
+		@keyframes fadeIn {
+		    from { 
+		        opacity: 0; 
+		        transform: translate3d(0, 20px, 0); /* 使用3D变换 */
+		    }
+		    to { 
+		        opacity: 1; 
+		        transform: translate3d(0, 0, 0);
+		    }
+		}
+		
+		/* 创建帖子按钮优化 */
+		.create-post-btn {
+		    /* 原有样式 */
+		    transform: translateZ(0);
+		    will-change: transform;
+		}
+		/* 无帖子提示样式 */
+		.no-posts-message {
+		    text-align: center;
+		    padding: 60px 20px;
+		    background: white;
+		    border-radius: 15px;
+		    box-shadow: var(--card-shadow);
+		    opacity: 0;
+		    transform: translate3d(0, 20px, 0);
+		    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		    margin: 20px 0;
+		}
+		
+		.no-posts-content i {
+		    font-size: 4rem;
+		    color: var(--light-gray);
+		    margin-bottom: 20px;
+		    display: block;
+		}
+		
+		.no-posts-content h3 {
+		    color: var(--gray-color);
+		    margin-bottom: 10px;
+		    font-weight: 600;
+		}
+		
+		.no-posts-content p {
+		    color: var(--gray-color);
+		    margin-bottom: 25px;
+		}
+		
+		/* 分类标签点击效果优化 */
+		.category-tag {
+		    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		    transform: translateZ(0);
+		}
+		
+		.category-tag:active {
+		    transform: scale(0.95);
+		}
+		
+		/* 帖子容器优化 */
+		.posts-container {
+		    position: relative;
+		    min-height: 200px; /* 避免布局抖动 */
+		}
+		
+		/* 性能优化：减少重排 */
+		.post-card {
+		    contain: layout style paint; /* 限制浏览器重排范围 */
+		}
+		/* 加载状态指示器 */
+		.loading-indicator {
+		    display: none;
+		    text-align: center;
+		    padding: 20px;
+		    color: var(--gray-color);
+		}
+		
+		.loading-indicator.active {
+		    display: block;
+		}
+		
+		.loading-spinner {
+		    display: inline-block;
+		    width: 20px;
+		    height: 20px;
+		    border: 3px solid rgba(74, 158, 138, 0.3);
+		    border-radius: 50%;
+		    border-top-color: var(--primary-color);
+		    animation: spin 1s ease-in-out infinite;
+		    margin-right: 10px;
+		}
+		
+		@keyframes spin {
+		    to { transform: rotate(360deg); }
+		}
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header class="site-header">
+      <div class="logo"><img src="images/logo.jpg" alt="logo" /><span>愈知桥</span></div>
+      <nav class="nav">
+          <!-- 导航栏将由JavaScript动态生成 -->
+      </nav>
+      <button id="speechToggle" >
+    </header>
+
+    <!-- 主要内容区 -->
+    <div class="container">
+        <div class="main-content">
+            <!-- 左侧内容 -->
+            <div class="content-left">
+                <!-- 搜索和分类 -->
+                <div class="search-section">
+                    <div class="search-box">
+                        <input type="text" placeholder="搜索康复理疗知识...">
+                        <button>
+                            <i class="fas fa-search"></i>
+                            <span>搜索</span>
+                        </button>
+                    </div>
+                    <div class="categories">
+                        <div class="category-tag active">全部</div>
+                        <div class="category-tag">中医理疗</div>
+                        <div class="category-tag">物理治疗</div>
+                        <div class="category-tag">运动康复</div>
+                        <div class="category-tag">营养调理</div>
+                        <div class="category-tag">心理健康</div>
+                        <div class="category-tag">康复案例</div>
+                    </div>
+                </div>
+
+                <!-- 帖子列表 -->
+                <div class="posts-container">
+                    <!-- 帖子1 -->
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div>
+                                <h2 class="post-title">中医推拿在颈椎病康复中的应用</h2>
+                                <div class="post-meta">
+                                    <span><i class="far fa-user"></i> 张明</span>
+                                    <span><i class="far fa-clock"></i> 2小时前</span>
+                                    <span><i class="far fa-eye"></i> 245</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p class="post-excerpt">颈椎病是现代人常见的健康问题，中医推拿作为一种非侵入性治疗方法，在颈椎病康复中发挥着重要作用。本文将详细介绍推拿手法的选择、操作要点以及注意事项...</p>
+                            <a href="https://www.nhc.gov.cn/wjw/index.shtml" class="read-more" target="_blank">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="post-footer">
+                            <div class="post-actions">
+                                <div class="post-action">
+                                    <i class="far fa-thumbs-up"></i>
+                                    <span>86</span>
+                                </div>
+                                <div class="post-action">
+                                    <i class="far fa-comment"></i>
+                                    <span>24</span>
+                                </div>
+                                <div class="post-action">
+                                    <i class="far fa-bookmark"></i>
+                                    <span>收藏</span>
+                                </div>
+                            </div>
+                            <div class="post-tags">
+                                <span class="category-tag">中医理疗</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 帖子2 -->
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div>
+                                <h2 class="post-title">物理因子疗法在运动损伤康复中的效果分析</h2>
+                                <div class="post-meta">
+                                    <span><i class="far fa-user"></i> 李华</span>
+                                    <span><i class="far fa-clock"></i> 5小时前</span>
+                                    <span><i class="far fa-eye"></i> 189</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p class="post-excerpt">物理因子疗法包括电疗、光疗、热疗等多种方法，在运动损伤康复中具有独特优势。本文通过临床案例分析，探讨不同物理因子疗法在各类运动损伤中的应用效果...</p>
+                            <a href="https://www.nhc.gov.cn/wjw/index.shtml" class="read-more" target="_blank">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="post-footer">
+                            <div class="post-actions">
+                                <div class="post-action">
+                                    <i class="far fa-thumbs-up"></i>
+                                    <span>72</span>
+                                </div>
+                                <div class="post-action">
+                                    <i class="far fa-comment"></i>
+                                    <span>18</span>
+                                </div>
+                                <div class="post-action">
+                                    <i class="far fa-bookmark"></i>
+                                    <span>收藏</span>
+                                </div>
+                            </div>
+                            <div class="post-tags">
+                                <span class="category-tag">物理治疗</span>
+                                <span class="category-tag">运动康复</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 帖子3 -->
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div>
+                                <h2 class="post-title">康复期营养支持的重要性及实施策略</h2>
+                                <div class="post-meta">
+                                    <span><i class="far fa-user"></i> 王芳</span>
+                                    <span><i class="far fa-clock"></i> 1天前</span>
+                                    <span><i class="far fa-eye"></i> 312</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p class="post-excerpt">康复期的营养支持对于患者恢复至关重要。合理的营养摄入可以加速组织修复、增强免疫力、提高康复效果。本文将详细介绍康复期营养支持的原则、营养素需求及实施方法...</p>
+                            <a href="https://www.nhc.gov.cn/wjw/index.shtml" class="read-more" target="_blank">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="post-footer">
+                            <div class="post-actions">
+                                <div class="post-action">
+                                    <i class="far fa-thumbs-up"></i>
+                                    <span>105</span>
+                                </div>
+                                <div class="post-action">
+                                    <i class="far fa-comment"></i>
+                                    <span>32</span>
+                                </div>
+                                <div class="post-action">
+                                    <i class="far fa-bookmark"></i>
+                                    <span>收藏</span>
+                                </div>
+                            </div>
+                            <div class="post-tags">
+                                <span class="category-tag">营养调理</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 帖子4 -->
+                    <div class="post-card">
+                        <div class="post-header">
+                            <div>
+                                <h2 class="post-title">心理干预在慢性疼痛康复中的作用</h2>
+                                <div class="post-meta">
+                                    <span><i class="far fa-user"></i> 赵磊</span>
+                                    <span><i class="far fa-clock"></i> 2天前</span>
+                                    <span><i class="far fa-eye"></i> 276</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p class="post-excerpt">慢性疼痛不仅影响患者的生理功能，还会导致心理问题。心理干预作为康复治疗的重要组成部分，可以帮助患者调整心态、减轻疼痛感知、提高生活质量。本文探讨了认知行为疗法、放松训练等方法在慢性疼痛康复中的应用...</p>
+                            <a href="https://www.nhc.gov.cn/wjw/index.shtml" class="read-more" target="_blank">阅读全文 <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="post-footer">
+                            <div class="post-actions">
+                                <div class="post-action">
+                                    <i class="far fa-thumbs-up"></i>
+                                    <span>93</span>
+                                </div>
+                                <div class="post-action">
+                                    <i class="far fa-comment"></i>
+                                    <span>41</span>
+                                </div>
+                                <div class="post-action">
+                                    <i class="far fa-bookmark"></i>
+                                    <span>收藏</span>
+                                </div>
+                            </div>
+                            <div class="post-tags">
+                                <span class="category-tag">心理健康</span>
+                                <span class="category-tag">康复案例</span>
+                            </div>
+                        </div>
+                    </div>
+					<!-- 帖子5 -->
+					<div class="post-card">
+					    <div class="post-header">
+					        <div>
+					            <h2 class="post-title">针灸治疗慢性疼痛的机制与临床应用</h2>
+					            <div class="post-meta">
+					                <span><i class="far fa-user"></i> 刘医师</span>
+					                <span><i class="far fa-clock"></i> 3天前</span>
+					                <span><i class="far fa-eye"></i> 198</span>
+					            </div>
+					        </div>
+					    </div>
+					    <div class="post-content">
+					        <p class="post-excerpt">针灸作为传统中医的重要组成部分，在慢性疼痛治疗中显示出独特优势。本文从神经生理学角度分析针灸镇痛机制，并结合临床案例探讨不同穴位组合的治疗效果...</p>
+					        <a href="https://www.nhc.gov.cn/wjw/index.shtml" class="read-more" target="_blank">阅读全文 <i class="fas fa-arrow-right"></i></a>
+					    </div>
+					    <div class="post-footer">
+					        <div class="post-actions">
+					            <div class="post-action">
+					                <i class="far fa-thumbs-up"></i>
+					                <span>67</span>
+					            </div>
+					            <div class="post-action">
+					                <i class="far fa-comment"></i>
+					                <span>15</span>
+					            </div>
+					            <div class="post-action">
+					                <i class="far fa-bookmark"></i>
+					                <span>收藏</span>
+					            </div>
+					        </div>
+					        <div class="post-tags">
+					            <span class="category-tag">中医理疗</span>
+					            <span class="category-tag">康复案例</span>
+					        </div>
+					    </div>
+					</div>
+					
+					<!-- 帖子6 -->
+					<div class="post-card">
+					    <div class="post-header">
+					        <div>
+					            <h2 class="post-title">运动康复在膝关节术后恢复中的关键作用</h2>
+					            <div class="post-meta">
+					                <span><i class="far fa-user"></i> 陈康复师</span>
+					                <span><i class="far fa-clock"></i> 4天前</span>
+					                <span><i class="far fa-eye"></i> 224</span>
+					            </div>
+					        </div>
+					    </div>
+					    <div class="post-content">
+					        <p class="post-excerpt">膝关节手术后康复是决定手术效果的关键环节。科学的运动康复计划能够有效恢复关节功能、增强肌肉力量、预防并发症。本文详细介绍不同阶段的康复训练方案...</p>
+					        <a href="https://www.nhc.gov.cn/wjw/index.shtml" class="read-more" target="_blank">阅读全文 <i class="fas fa-arrow-right"></i></a>
+					    </div>
+					    <div class="post-footer">
+					        <div class="post-actions">
+					            <div class="post-action">
+					                <i class="far fa-thumbs-up"></i>
+					                <span>89</span>
+					            </div>
+					            <div class="post-action">
+					                <i class="far fa-comment"></i>
+					                <span>22</span>
+					            </div>
+					            <div class="post-action">
+					                <i class="far fa-bookmark"></i>
+					                <span>收藏</span>
+					            </div>
+					        </div>
+					        <div class="post-tags">
+					            <span class="category-tag">运动康复</span>
+					            <span class="category-tag">物理治疗</span>
+					        </div>
+					    </div>
+					</div>
+					
+					<!-- 帖子7 -->
+					<div class="post-card">
+					    <div class="post-header">
+					        <div>
+					            <h2 class="post-title">营养干预在骨质疏松康复治疗中的应用</h2>
+					            <div class="post-meta">
+					                <span><i class="far fa-user"></i> 营养师张</span>
+					                <span><i class="far fa-clock"></i> 5天前</span>
+					                <span><i class="far fa-eye"></i> 176</span>
+					            </div>
+					        </div>
+					    </div>
+					    <div class="post-content">
+					        <p class="post-excerpt">骨质疏松是老年人常见疾病，合理的营养干预对于改善骨密度、预防骨折具有重要意义。本文系统介绍钙、维生素D、蛋白质等关键营养素的作用及膳食建议...</p>
+					        <a href="https://www.nhc.gov.cn/wjw/index.shtml" class="read-more" target="_blank">阅读全文 <i class="fas fa-arrow-right"></i></a>
+					    </div>
+					    <div class="post-footer">
+					        <div class="post-actions">
+					            <div class="post-action">
+					                <i class="far fa-thumbs-up"></i>
+					                <span>74</span>
+					            </div>
+					            <div class="post-action">
+					                <i class="far fa-comment"></i>
+					                <span>19</span>
+					            </div>
+					            <div class="post-action">
+					                <i class="far fa-bookmark"></i>
+					                <span>收藏</span>
+					            </div>
+					        </div>
+					        <div class="post-tags">
+					            <span class="category-tag">营养调理</span>
+					        </div>
+					    </div>
+					</div>
+					
+					<!-- 帖子8 -->
+					<div class="post-card">
+					    <div class="post-header">
+					        <div>
+					            <h2 class="post-title">心理疏导在慢性病患者康复中的重要性</h2>
+					            <div class="post-meta">
+					                <span><i class="far fa-user"></i> 王心理师</span>
+					                <span><i class="far fa-clock"></i> 1周前</span>
+					                <span><i class="far fa-eye"></i> 203</span>
+					            </div>
+					        </div>
+					    </div>
+					    <div class="post-content">
+					        <p class="post-excerpt">慢性疾病不仅影响患者的生理健康，更对其心理健康造成严重冲击。有效的心理疏导能够帮助患者建立积极心态，提高治疗依从性，改善生活质量...</p>
+					        <a href="https://www.nhc.gov.cn/wjw/index.shtml" class="read-more" target="_blank">阅读全文 <i class="fas fa-arrow-right"></i></a>
+					    </div>
+					    <div class="post-footer">
+					        <div class="post-actions">
+					            <div class="post-action">
+					                <i class="far fa-thumbs-up"></i>
+					                <span>81</span>
+					            </div>
+					            <div class="post-action">
+					                <i class="far fa-comment"></i>
+					                <span>28</span>
+					            </div>
+					            <div class="post-action">
+					                <i class="far fa-bookmark"></i>
+					                <span>收藏</span>
+					            </div>
+					        </div>
+					        <div class="post-tags">
+					            <span class="category-tag">心理健康</span>
+					        </div>
+					    </div>
+					</div>
+                </div>
+            </div>
+
+            <!-- 右侧侧边栏 -->
+            <div class="sidebar">
+                <!-- 用户信息 -->
+                <div class="sidebar-widget">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <h3 class="user-name">康复学习者</h3>
+                        <p>专注于康复理疗知识分享</p>
+                        <div class="user-stats">
+                            <div class="stat">
+                                <div class="stat-value">24</div>
+                                <div class="stat-label">帖子</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">186</div>
+                                <div class="stat-label">粉丝</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value">352</div>
+                                <div class="stat-label">点赞</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 热门帖子 -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">热门帖子</h3>
+                    <div class="popular-posts">
+                        <div class="popular-post">
+                            <div class="popular-post-content">
+                                <h4>针灸治疗腰椎间盘突出的临床观察</h4>
+                                <div class="post-meta">
+                                    <span><i class="far fa-eye"></i> 421</span>
+                                    <span><i class="far fa-thumbs-up"></i> 128</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="popular-post">
+                            <div class="popular-post-content">
+                                <h4>康复训练对中风患者运动功能恢复的影响</h4>
+                                <div class="post-meta">
+                                    <span><i class="far fa-eye"></i> 387</span>
+                                    <span><i class="far fa-thumbs-up"></i> 95</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="popular-post">
+                            <div class="popular-post-content">
+                                <h4>老年人跌倒预防与康复策略</h4>
+                                <div class="post-meta">
+                                    <span><i class="far fa-eye"></i> 356</span>
+                                    <span><i class="far fa-thumbs-up"></i> 87</span>
+                                </div>
+                            </div>
+                        </div>
+						<div class="popular-post">
+						    <div class="popular-post-content">
+						        <h4>针灸治疗慢性疼痛的机制与临床应用</h4>
+						        <div class="post-meta">
+						            <span><i class="far fa-eye"></i> 198</span>
+						            <span><i class="far fa-thumbs-up"></i> 67</span>
+						        </div>
+						    </div>
+						</div>
+						<div class="popular-post">
+						    <div class="popular-post-content">
+						        <h4>运动康复在膝关节术后恢复中的关键作用</h4>
+						        <div class="post-meta">
+						            <span><i class="far fa-eye"></i> 224</span>
+						            <span><i class="far fa-thumbs-up"></i> 89</span>
+						        </div>
+						    </div>
+						</div>
+                    </div>
+                </div>
+
+                <!-- 论坛统计 -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">论坛统计</h3>
+                    <div class="forum-stats">
+                        <div class="stat" style="margin-bottom: 15px;">
+                            <div class="stat-value">1,248</div>
+                            <div class="stat-label">总帖子数</div>
+                        </div>
+                        <div class="stat" style="margin-bottom: 15px;">
+                            <div class="stat-value">3,572</div>
+                            <div class="stat-label">总会员数</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">56</div>
+                            <div class="stat-label">在线用户</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 创建帖子按钮 -->
+    <div class="create-post-btn" id="createPostBtn">
+        <i class="fas fa-edit"></i>
+        <span class="btn-text">发表帖子</span>
+    </div>
+
+    <!-- 创建帖子模态框 -->
+    <div class="modal" id="createPostModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-edit"></i>
+                    发布新帖子
+                </h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="postForm">
+                <div class="form-group">
+                    <label for="postTitle">帖子标题</label>
+                    <input type="text" id="postTitle" class="form-control" placeholder="请输入帖子标题">
+                </div>
+                <div class="form-group">
+                    <label for="postCategory">分类</label>
+                    <select id="postCategory" class="form-control">
+                        <option value="">请选择分类</option>
+                        <option value="中医理疗">中医理疗</option>
+                        <option value="物理治疗">物理治疗</option>
+                        <option value="运动康复">运动康复</option>
+                        <option value="营养调理">营养调理</option>
+                        <option value="心理健康">心理健康</option>
+                        <option value="康复案例">康复案例</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="postContent">帖子内容</label>
+                    <textarea id="postContent" class="form-control" placeholder="请输入帖子内容..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="cancelPost">取消</button>
+                    <button type="submit" class="btn btn-primary">发布</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="site-footer">
+      <p>© 愈知桥：学生就业与年人康复双端价值共生做康养生态先行者</p>
+    </footer>
+    
+    <script src="js/config.js"></script>
+    <script src="js/evaluation.js"></script>
+    <script src="js/tts_stt.js"></script>
+
+    <script>
+		window.pageName = 'discuss';
+        // 模态框控制
+        const createPostBtn = document.getElementById('createPostBtn');
+        const createPostModal = document.getElementById('createPostModal');
+        const closeModal = document.querySelector('.close-modal');
+        const cancelPost = document.getElementById('cancelPost');
+        const postForm = document.getElementById('postForm');
+
+        // 打开模态框
+        createPostBtn.addEventListener('click', () => {
+            createPostModal.style.display = 'flex';
+        });
+
+        // 关闭模态框
+        function closePostModal() {
+            createPostModal.style.display = 'none';
+        }
+
+        closeModal.addEventListener('click', closePostModal);
+        cancelPost.addEventListener('click', closePostModal);
+
+        // 点击模态框外部关闭
+        window.addEventListener('click', (e) => {
+            if (e.target === createPostModal) {
+                closePostModal();
+            }
+        });
+
+        // 表单提交
+        postForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = document.getElementById('postTitle').value;
+            const category = document.getElementById('postCategory').value;
+            const content = document.getElementById('postContent').value;
+            
+            if (!title || !category || !content) {
+                alert('请填写所有必填字段！');
+                return;
+            }
+            
+            // 在实际应用中，这里应该发送数据到服务器
+            alert('帖子发布成功！');
+            closePostModal();
+            postForm.reset();
+        });
+
+        // 点赞功能
+        document.querySelectorAll('.post-action').forEach(action => {
+            action.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                const count = this.querySelector('span');
+                
+                if (icon.classList.contains('far')) {
+                    icon.classList.replace('far', 'fas');
+                    count.textContent = parseInt(count.textContent) + 1;
+                    this.style.color = 'var(--primary-color)';
+                } else {
+                    icon.classList.replace('fas', 'far');
+                    count.textContent = parseInt(count.textContent) - 1;
+                    this.style.color = 'var(--gray-color)';
+                }
+            });
+        });
+
+        // 分类标签切换和筛选功能（优化版）
+        document.querySelectorAll('.categories .category-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                // 添加轻微点击反馈
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
+                document.querySelectorAll('.categories .category-tag').forEach(t => {
+                    t.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const selectedCategory = this.textContent.trim();
+                filterPostsByCategory(selectedCategory);
+            });
+        });
+        
+        // 优化的筛选函数
+        function filterPostsByCategory(category) {
+            const allPosts = document.querySelectorAll('.post-card');
+            const startTime = performance.now();
+            
+            requestAnimationFrame(() => {
+                allPosts.forEach((post, index) => {
+                    const postTags = post.querySelectorAll('.post-tags .category-tag');
+                    let hasMatchingTag = category === '全部';
+                    
+                    if (!hasMatchingTag) {
+                        postTags.forEach(tag => {
+                            if (tag.textContent.trim() === category) {
+                                hasMatchingTag = true;
+                            }
+                        });
+                    }
+                    
+                    // 错开动画时间，创造瀑布流效果
+                    setTimeout(() => {
+                        requestAnimationFrame(() => {
+                            if (hasMatchingTag) {
+                                post.style.display = 'block';
+                                // 强制重绘
+                                post.offsetHeight;
+                                post.style.opacity = '1';
+                                post.style.transform = 'translate3d(0, 0, 0)';
+                            } else {
+                                post.style.opacity = '0';
+                                post.style.transform = 'translate3d(0, 20px, 0)';
+                                setTimeout(() => {
+                                    post.style.display = 'none';
+                                }, 250);
+                            }
+                        });
+                    }, index * 20); // 更短的延迟，更流畅
+                });
+                
+                // 性能监控（开发时使用）
+                const endTime = performance.now();
+                console.log(`筛选耗时: ${(endTime - startTime).toFixed(2)}ms`);
+            });
+        }
+
+        // 搜索功能
+        const searchInput = document.querySelector('.search-box input');
+        const searchButton = document.querySelector('.search-box button');
+        
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        
+        function performSearch() {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            if (!searchTerm) return;
+            
+            document.querySelectorAll('.post-card').forEach(card => {
+                const title = card.querySelector('.post-title').textContent.toLowerCase();
+                const excerpt = card.querySelector('.post-excerpt').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || excerpt.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>中药图鉴 - 愈知桥</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo"><img src="images/logo.jpg" alt="logo" /><span>愈知桥</span></div>
+    <nav class="nav">
+        <!-- 导航栏将由JavaScript动态生成 -->
+    </nav>
+    <button id="speechToggle" class="btn-speech">语音助手</button>
+  </header>
+
+  <main class="container">
+    <h2>中药图鉴</h2>
+    <div class="search-bar">
+      <input id="herbSearch" placeholder="输入药名或拼音检索（例如：枸杞）" />
+      <button id="searchBtn">搜索</button>
+    </div>
+    <div id="herbList" class="herb-grid"></div>
+
+    <template id="herbCardTpl">
+      <div class="herb-card">
+        <img class="herb-img" src="" alt="中药图片"/>
+        <h4 class="herb-name"></h4>
+        <p class="herb-desc"></p>
+        <button class="btn small read-btn">朗读</button>
+      </div>
+    </template>
+  </main>
+
+<div style="
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+">
+    <h3 style="
+        color: #333;
+        margin-bottom: 12px;
+        font-size: 14px;
+        font-weight: bold;
+    ">版权声明</h3>
+    <p style="
+        margin-bottom: 8px;
+        font-size: 12px;
+        line-height: 1.5;
+        color: #666;
+    ">
+        本页面展示的所有素材、图片及相关内容，由<strong style="color: #1890ff;">长沙泰和医院白医生</strong>提供。
+    </p>
+    <p style="
+        margin-bottom: 0;
+        font-size: 12px;
+        line-height: 1.5;
+        color: #666;
+    ">
+        特此声明：如有雷同，纯属巧合。任何单位或个人未经授权不得擅自使用上述素材。
+    </p>
+</div>
+  <footer class="site-footer">© 愈知桥：学生就业与年人康复双端价值共生做康养生态先行者</footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/herbs.js"></script>
+  <script src="js/tts_stt.js"></script>
+  <script>window.pageName='herbs';</script>
+</body>
+</html>

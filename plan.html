@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>康养方案 - 愈知桥</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary: #2a8f7a;
+            --primary-light: #e8f4f1;
+            --secondary: #ff9a3d;
+            --text: #333;
+            --text-light: #666;
+            --bg: #f8f9fa;
+            --card-bg: #fff;
+            --border: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --radius: 12px;
+            --font-size-large: 1.25rem;
+            --font-size-xlarge: 1.5rem;
+            --font-size-xxlarge: 2rem;
+        }
+        
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: var(--font-size-large);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 字体大小控制 */
+        .font-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .font-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .font-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* 高对比度模式 */
+        .contrast-mode {
+            --primary: #005a87;
+            --primary-light: #e6f2ff;
+            --secondary: #ff6600;
+            --text: #000;
+            --text-light: #333;
+            --bg: #fff;
+            --card-bg: #f0f8ff;
+            --border: #005a87;
+            --shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .contrast-toggle {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 100;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        /* 页面标题 */
+        .page-header {
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .page-header h2 {
+            font-size: var(--font-size-xxlarge);
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-header p {
+            color: var(--text-light);
+            font-size: var(--font-size-large);
+        }
+        
+        /* 康养方案部分 */
+        .plan-section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .section-header h3 {
+            font-size: var(--font-size-xlarge);
+            color: var(--primary);
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: var(--font-size-large);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1a6b5a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(42, 143, 122, 0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #e0852a;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary-light);
+        }
+        
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+        }
+        
+        /* 分类筛选 */
+        .plan-categories {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            padding: 0.6rem 1.2rem;
+            background: var(--primary-light);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+        
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .category-btn:hover:not(.active) {
+            background: #d4ebe6;
+        }
+        
+        /* 方案卡片 */
+        .plan-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .plan-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s forwards;
+        }
+        
+        .plan-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .plan-header {
+            padding: 1.2rem;
+            background: var(--primary-light);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .plan-header h4 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+        
+        .plan-date {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        
+        .plan-content {
+            padding: 1.2rem;
+        }
+        
+        .plan-section-item {
+            margin-bottom: 1.2rem;
+        }
+        
+        .plan-section-item h5 {
+            margin: 0 0 0.5rem 0;
+            color: var(--primary);
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .plan-section-item ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .plan-section-item li {
+            padding: 0.4rem 0;
+            border-bottom: 1px solid #f0f7f5;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+        }
+        
+        .plan-section-item li:last-child {
+            border-bottom: none;
+        }
+        
+        .plan-section-item li:before {
+            content: "✓";
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .plan-actions {
+            padding: 1rem 1.2rem;
+            background: #f8fdfc;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        /* 健康小贴士 */
+        .health-tips {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .tip-card {
+            background: var(--primary-light);
+            border-radius: 8px;
+            padding: 1.2rem;
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s;
+        }
+        
+        .tip-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .tip-card h5 {
+            margin: 0 0 0.5rem 0;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .tip-card p {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text);
+        }
+        
+        /* 家属监护 */
+        .family-monitoring {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .monitoring-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .monitoring-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: transform 0.3s;
+        }
+        
+        .monitoring-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .monitoring-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .monitoring-card h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+        
+        .monitoring-card p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        
+        .alert-list {
+            margin-top: 1rem;
+        }
+        
+        .alert-item {
+            padding: 0.75rem;
+            background: #fff5f5;
+            border-left: 4px solid #e74c3c;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .alert-item:before {
+            content: "⚠️";
+        }
+        
+        .checkin-calendar {
+            margin-top: 1rem;
+        }
+        
+        .calendar-header {
+            margin-bottom: 0.75rem;
+            font-weight: bold;
+            color: var(--text);
+            font-size: 1.1rem;
+        }
+        
+        .calendar-days {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .day {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--primary-light);
+            font-size: 1rem;
+        }
+        
+        .day.checked {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* 紧急联系 */
+        .emergency-contact {
+            background: #fff5f5;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border: 2px solid #e74c3c;
+        }
+        
+        .emergency-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: #e74c3c;
+        }
+        
+        .emergency-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .emergency-btn {
+            padding: 1rem 1.5rem;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+        
+        .emergency-btn:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+        
+        /* 用药提醒 */
+        .medication-reminder {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .medication-list {
+            margin-top: 1rem;
+        }
+        
+        .medication-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .medication-item:last-child {
+            border-bottom: none;
+        }
+        
+        .medication-info h5 {
+            margin: 0 0 0.25rem 0;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        .medication-info p {
+            margin: 0;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        
+        .medication-time {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        /* 消息提示 */
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateX(120%);
+            transition: transform 0.3s;
+            font-size: 1rem;
+        }
+        
+        .message.show {
+            transform: translateX(0);
+        }
+        
+        .message.success {
+            background: #2a8f7a;
+        }
+        
+        .message.info {
+            background: #3498db;
+        }
+        
+        .message.warning {
+            background: #f39c12;
+        }
+        
+        /* 语音助手样式 */
+        .speech-control-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 9999;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .speech-control-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        
+        .speech-control-btn.listening {
+            background: #FF9800;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .speech-control-btn.speaking {
+            background: #F44336;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        #speechControlModal {
+            font-family: Arial, sans-serif;
+        }
+        
+        #speechControlModal button:hover {
+            opacity: 0.9;
+        }
+        
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav {
+                gap: 1rem;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .plan-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .monitoring-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .emergency-buttons {
+                flex-direction: column;
+            }
+            
+            .font-controls, .contrast-toggle {
+                position: static;
+                margin: 1rem 0;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+      <div class="logo"><img src="images/logo.jpg" alt="logo" /><span>愈知桥</span></div>
+      <nav class="nav">
+          <!-- 导航栏将由JavaScript动态生成 -->
+      </nav>
+      <button id="speechToggle" class="btn-speech">语音助手</button>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h2>康养方案 · 家属监护</h2>
+            <p>个性化康养方案，为老年人提供全方位的健康管理服务</p>
+        </div>
+
+        <section class="plan-section">
+            <div class="section-header">
+                <h3>个性化康养方案</h3>
+                <button id="genPlan" class="btn btn-primary">
+                    <i class="fas fa-robot"></i> 用AI生成个性化方案
+                </button>
+            </div>
+            
+            <div class="plan-categories">
+                <button class="category-btn active" data-category="all">全部方案</button>
+                <button class="category-btn" data-category="diet">饮食调理</button>
+                <button class="category-btn" data-category="exercise">运动康复</button>
+                <button class="category-btn" data-category="mental">心理健康</button>
+                <button class="category-btn" data-category="daily">日常生活</button>
+            </div>
+            
+            <div id="plans" class="plan-cards">
+                <!-- 康养方案卡片将由JavaScript动态生成 -->
+            </div>
+        </section>
+        
+        <section class="health-tips">
+            <h3>健康小贴士</h3>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h5><i class="fas fa-sun"></i> 晨起养生</h5>
+                    <p>早晨起床后先喝一杯温水，促进血液循环，唤醒身体机能。</p>
+                </div>
+                <div class="tip-card">
+                    <h5><i class="fas fa-walking"></i> 适度运动</h5>
+                    <p>每天坚持30分钟适度运动，如散步、太极拳，增强体质。</p>
+                </div>
+                <div class="tip-card">
+                    <h5><i class="fas fa-utensils"></i> 均衡饮食</h5>
+                    <p>饮食多样化，粗细搭配，多吃蔬菜水果，控制盐糖摄入。</p>
+                </div>
+                <div class="tip-card">
+                    <h5><i class="fas fa-bed"></i> 良好睡眠</h5>
+                    <p>保证7-8小时充足睡眠，睡前避免刺激性饮食和剧烈运动。</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="medication-reminder">
+            <h3>用药提醒</h3>
+            <p>按时服药是健康管理的重要环节</p>
+            <div class="medication-list">
+                <div class="medication-item">
+                    <div class="medication-info">
+                        <h5>降压药</h5>
+                        <p>每日一次，每次一片</p>
+                    </div>
+                    <div class="medication-time">08:00</div>
+                </div>
+                <div class="medication-item">
+                    <div class="medication-info">
+                        <h5>降糖药</h5>
+                        <p>饭前服用，每次半片</p>
+                    </div>
+                    <div class="medication-time">12:00</div>
+                </div>
+                <div class="medication-item">
+                    <div class="medication-info">
+                        <h5>钙片</h5>
+                        <p>每日一次，每次两片</p>
+                    </div>
+                    <div class="medication-time">20:00</div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="family-monitoring">
+            <h3>家属监护</h3>
+            <p>绑定老人账号后可查看健康曲线、异常预警和训练打卡进度</p>
+            
+            <div class="monitoring-cards">
+                <div class="monitoring-card">
+                    <div class="monitoring-icon"><i class="fas fa-chart-line"></i></div>
+                    <h4>健康曲线</h4>
+                    <p>实时查看老人的健康数据变化趋势</p>
+                    <div class="monitoring-chart" id="healthChart">
+                        <canvas width="240" height="120"></canvas>
+                    </div>
+                </div>
+                
+                <div class="monitoring-card">
+                    <div class="monitoring-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <h4>异常预警</h4>
+                    <p>智能识别健康异常并及时通知家属</p>
+                    <div class="alert-list">
+                        <div class="alert-item">今日血压偏高</div>
+                        <div class="alert-item">睡眠质量下降</div>
+                    </div>
+                </div>
+                
+                <div class="monitoring-card">
+                    <div class="monitoring-icon"><i class="fas fa-check-circle"></i></div>
+                    <h4>训练打卡</h4>
+                    <p>跟踪老人的康复训练完成情况</p>
+                    <div class="checkin-calendar">
+                        <div class="calendar-header">
+                            <span>本周打卡</span>
+                        </div>
+                        <div class="calendar-days">
+                            <div class="day checked">一</div>
+                            <div class="day checked">二</div>
+                            <div class="day checked">三</div>
+                            <div class="day">四</div>
+                            <div class="day">五</div>
+                            <div class="day">六</div>
+                            <div class="day">日</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="emergency-contact">
+            <div class="emergency-header">
+                <i class="fas fa-phone-alt"></i>
+                <h3>紧急联系</h3>
+            </div>
+            <p>遇到紧急情况时，请立即联系家人或拨打急救电话</p>
+            <div class="emergency-buttons">
+                <button class="emergency-btn" id="callFamily">
+                    <i class="fas fa-phone"></i> 联系家人
+                </button>
+                <button class="emergency-btn" id="callEmergency">
+                    <i class="fas fa-ambulance"></i> 拨打120
+                </button>
+                <button class="emergency-btn" id="callNeighbor">
+                    <i class="fas fa-user-friends"></i> 联系邻居
+                </button>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="site-footer">
+        <p>© 愈知桥：学生就业与年人康复双端价值共生做康养生态先行者</p>
+    </footer>
+    
+    <!-- 字体大小控制 -->
+    <div class="font-controls">
+        <button class="font-btn" id="fontSmall">A-</button>
+        <button class="font-btn" id="fontMedium">A</button>
+        <button class="font-btn" id="fontLarge">A+</button>
+    </div>
+    
+    <!-- 高对比度切换 -->
+    <div class="contrast-toggle" id="contrastToggle">
+        <i class="fas fa-adjust"></i>
+        <span>高对比度</span>
+    </div>
+    
+    <div id="message" class="message"></div>
+    <script src="js/config.js"></script>
+    <script>
+        // 设置页面标识
+        window.pageName = 'plan';
+        
+        // tts_stt.js - 文本转语音和语音识别功能
+        class SpeechHelper {
+            constructor() {
+                this.synth = window.speechSynthesis;
+                this.recognition = null;
+                this.isListening = false;
+                this.isSpeaking = false;
+                this.utterance = null;
+                this.speechControlModal = null;
+                
+                this.initSpeechRecognition();
+                this.createSpeechControlModal();
+            }
+            
+            // 初始化语音识别
+            initSpeechRecognition() {
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    this.recognition = new SpeechRecognition();
+                    this.recognition.continuous = false;
+                    this.recognition.interimResults = false;
+                    this.recognition.lang = 'zh-CN';
+                    
+                    this.recognition.onstart = () => {
+                        this.isListening = true;
+                        this.updateSpeechButton();
+                        showMessage('语音识别已开始，请说话...', 'info');
+                    };
+                    
+                    this.recognition.onend = () => {
+                        this.isListening = false;
+                        this.updateSpeechButton();
+                    };
+                    
+                    this.recognition.onresult = (event) => {
+                        const transcript = event.results[0][0].transcript;
+                        showMessage(`识别结果: ${transcript}`, 'success');
+                        this.handleVoiceCommand(transcript);
+                    };
+                    
+                    this.recognition.onerror = (event) => {
+                        console.error('语音识别错误:', event.error);
+                        this.isListening = false;
+                        this.updateSpeechButton();
+                        showMessage(`语音识别错误: ${event.error}`, 'warning');
+                    };
+                } else {
+                    console.warn('浏览器不支持语音识别功能');
+                    showMessage('您的浏览器不支持语音识别功能', 'warning');
+                }
+            }
+            
+            // 创建语音控制弹窗
+            createSpeechControlModal() {
+                this.speechControlModal = document.createElement('div');
+                this.speechControlModal.id = 'speechControlModal';
+                this.speechControlModal.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                    z-index: 10000;
+                    display: none;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 15px;
+                    min-width: 200px;
+                    text-align: center;
+                    border: 2px solid #4CAF50;
+                `;
+                
+                const title = document.createElement('div');
+                title.textContent = '语音朗读中...';
+                title.style.cssText = `
+                    font-size: 18px;
+                    font-weight: bold;
+                    color: #333;
+                `;
+                
+                const stopBtn = document.createElement('button');
+                stopBtn.textContent = '终止朗读';
+                stopBtn.style.cssText = `
+                    background: #ff4757;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    transition: background-color 0.3s;
+                `;
+                
+                stopBtn.addEventListener('mouseover', () => {
+                    stopBtn.style.background = '#ff3742';
+                });
+                
+                stopBtn.addEventListener('mouseout', () => {
+                    stopBtn.style.background = '#ff4757';
+                });
+                
+                stopBtn.addEventListener('click', () => {
+                    this.stopSpeaking();
+                    this.hideSpeechControl();
+                });
+                
+                this.speechControlModal.appendChild(title);
+                this.speechControlModal.appendChild(stopBtn);
+                document.body.appendChild(this.speechControlModal);
+            }
+            
+            // 显示语音控制弹窗
+            showSpeechControl() {
+                if (this.speechControlModal) {
+                    this.speechControlModal.style.display = 'flex';
+                }
+            }
+            
+            // 隐藏语音控制弹窗
+            hideSpeechControl() {
+                if (this.speechControlModal) {
+                    this.speechControlModal.style.display = 'none';
+                }
+            }
+            
+            // 文本转语音
+            speakText(text, rate = 1.0, pitch = 1.0) {
+                if (this.isSpeaking) {
+                    this.stopSpeaking();
+                }
+                
+                return new Promise((resolve, reject) => {
+                    if (!this.synth) {
+                        reject(new Error('浏览器不支持语音合成'));
+                        return;
+                    }
+                    
+                    this.utterance = new SpeechSynthesisUtterance(text);
+                    this.utterance.lang = 'zh-CN';
+                    this.utterance.rate = rate;
+                    this.utterance.pitch = pitch;
+                    
+                    this.utterance.onstart = () => {
+                        this.isSpeaking = true;
+                        this.updateSpeechButton();
+                        this.showSpeechControl();
+                    };
+                    
+                    this.utterance.onend = () => {
+                        this.isSpeaking = false;
+                        this.updateSpeechButton();
+                        this.hideSpeechControl();
+                        resolve();
+                    };
+                    
+                    this.utterance.onerror = (event) => {
+                        this.isSpeaking = false;
+                        this.updateSpeechButton();
+                        this.hideSpeechControl();
+                        reject(event);
+                    };
+                    
+                    this.isSpeaking = true;
+                    this.updateSpeechButton();
+                    this.synth.speak(this.utterance);
+                });
+            }
+            
+            // 停止语音
+            stopSpeaking() {
+                if (this.synth && this.isSpeaking) {
+                    this.synth.cancel();
+                    this.isSpeaking = false;
+                    this.updateSpeechButton();
+                    this.hideSpeechControl();
+                }
+            }
+            
+            // 开始语音识别
+            startRecognition(callback) {
+                if (this.recognition && !this.isListening) {
+                    this.recognition.onresult = (event) => {
+                        const transcript = event.results[0][0].transcript;
+                        if (callback) callback(transcript);
+                    };
+                    
+                    try {
+                        this.recognition.start();
+                    } catch (error) {
+                        console.error('语音识别启动失败:', error);
+                        if (callback) callback(null);
+                    }
+                } else {
+                    if (callback) callback(null);
+                }
+            }
+            
+            // 开始语音识别（通用）
+            startListening() {
+                if (this.recognition && !this.isListening) {
+                    try {
+                        this.recognition.start();
+                    } catch (error) {
+                        console.error('语音识别启动失败:', error);
+                    }
+                }
+            }
+            
+            // 停止语音识别
+            stopListening() {
+                if (this.recognition && this.isListening) {
+                    this.recognition.stop();
+                }
+            }
+            
+            // 处理语音命令
+            handleVoiceCommand(command) {
+                console.log('语音命令:', command);
+                
+                // 根据页面和命令执行相应操作
+                const page = window.pageName;
+                
+                switch(page) {
+                    case 'evaluation':
+                        this.handleEvaluationCommands(command);
+                        break;
+                    case 'plan':
+                        this.handlePlanCommands(command);
+                        break;
+                    case 'herbs':
+                        this.handleHerbsCommands(command);
+                        break;
+                    case 'ai_doctor':
+                        this.handleAIDoctorCommands(command);
+                        break;
+                    default:
+                        this.handleGeneralCommands(command);
+                }
+            }
+            
+            // 处理AI医生页面命令
+            handleAIDoctorCommands(command) {
+                const input = document.getElementById('userInput');
+                const sendBtn = document.getElementById('sendMessage');
+                
+                if (command.includes('发送') || command.includes('提问') || command.includes('咨询')) {
+                    if (input && sendBtn) {
+                        sendBtn.click();
+                    }
+                } else if (command.includes('清空') || command.includes('清除')) {
+                    if (input) {
+                        input.value = '';
+                    }
+                } else if (command.includes('停止') || command.includes('终止')) {
+                    this.stopSpeaking();
+                } else {
+                    // 将语音输入添加到输入框
+                    if (input) {
+                        input.value = command;
+                    }
+                }
+            }
+            
+            // 处理评估页面命令
+            handleEvaluationCommands(command) {
+                if (command.includes('开始评估') || command.includes('进行评估')) {
+                    const startBtn = document.querySelector('.btn.primary');
+                    if (startBtn) startBtn.click();
+                } else if (command.includes('拍照') || command.includes('选择图片')) {
+                    const cameraBtn = document.querySelector('.camera-btn');
+                    if (cameraBtn) cameraBtn.click();
+                } else if (command.includes('清除') || command.includes('删除图片')) {
+                    const clearBtn = document.getElementById('clearPhoto');
+                    if (clearBtn) clearBtn.click();
+                } else if (command.includes('停止') || command.includes('终止')) {
+                    this.stopSpeaking();
+                }
+            }
+            
+            // 处理方案页面命令
+            handlePlanCommands(command) {
+                if (command.includes('生成方案') || command.includes('创建方案')) {
+                    this.speakText('正在为您生成个性化康养方案，请稍等');
+                    const genBtn = document.getElementById('genPlan');
+                    if (genBtn) genBtn.click();
+                } else if (command.includes('朗读') && command.includes('方案')) {
+                    // 找到最新的方案并朗读
+                    const latestPlan = document.querySelector('.plan-card');
+                    if (latestPlan) {
+                        const planId = latestPlan.getAttribute('data-plan');
+                        this.speakPlan(planId);
+                    } else {
+                        this.speakText('暂时没有找到可朗读的方案');
+                    }
+                } else if (command.includes('饮食调理') || command.includes('饮食方案')) {
+                    this.speakText('正在为您筛选饮食调理方案');
+                    document.querySelector('[data-category="diet"]').click();
+                } else if (command.includes('运动康复') || command.includes('运动方案')) {
+                    this.speakText('正在为您筛选运动康复方案');
+                    document.querySelector('[data-category="exercise"]').click();
+                } else if (command.includes('心理健康') || command.includes('心理方案')) {
+                    this.speakText('正在为您筛选心理健康方案');
+                    document.querySelector('[data-category="mental"]').click();
+                } else if (command.includes('日常生活') || command.includes('日常方案')) {
+                    this.speakText('正在为您筛选日常生活方案');
+                    document.querySelector('[data-category="daily"]').click();
+                } else if (command.includes('全部方案') || command.includes('所有方案')) {
+                    this.speakText('正在为您展示全部康养方案');
+                    document.querySelector('[data-category="all"]').click();
+                } else if (command.includes('提醒吃药') || command.includes('用药提醒')) {
+                    this.speakText('您的用药提醒已设置，请按时服药');
+                    showMessage('用药提醒已设置', 'success');
+                } else if (command.includes('健康曲线') || command.includes('查看健康')) {
+                    this.speakText('正在为您展示健康数据曲线');
+                    document.getElementById('healthChart').scrollIntoView({ behavior: 'smooth' });
+                } else if (command.includes('紧急联系') || command.includes('联系家人')) {
+                    this.speakText('正在为您联系家人');
+                    document.getElementById('callFamily').click();
+                } else if (command.includes('拨打急救') || command.includes('120')) {
+                    this.speakText('正在拨打120急救电话');
+                    document.getElementById('callEmergency').click();
+                } else if (command.includes('停止') || command.includes('终止')) {
+                    this.stopSpeaking();
+                } else {
+                    this.speakText('抱歉，我没有理解您的指令。您可以说"创建方案"、"提醒吃药"或"健康曲线"等指令');
+                }
+            }
+            
+            // 朗读方案内容
+            speakPlan(planId) {
+                const planCard = document.querySelector(`.plan-card[data-plan="${planId}"]`);
+                if (!planCard) return;
+                
+                const title = planCard.querySelector('h4').textContent;
+                const sections = planCard.querySelectorAll('.plan-section-item');
+                
+                let textToSpeak = `方案名称：${title}。`;
+                
+                sections.forEach(section => {
+                    const sectionTitle = section.querySelector('h5').textContent;
+                    const items = Array.from(section.querySelectorAll('li')).map(li => li.textContent);
+                    textToSpeak += `${sectionTitle}：${items.join('，')}。`;
+                });
+                
+                this.speakText(textToSpeak);
+            }
+            
+            // 处理药材页面命令
+            handleHerbsCommands(command) {
+                if (command.includes('搜索') || command.includes('查找')) {
+                    const searchInput = document.getElementById('herbSearch');
+                    if (searchInput) {
+                        const searchTerm = command.replace(/搜索|查找/g, '').trim();
+                        searchInput.value = searchTerm;
+                        
+                        // 触发搜索
+                        const searchBtn = document.getElementById('searchBtn');
+                        if (searchBtn) searchBtn.click();
+                    }
+                } else if (command.includes('智能搜索') || command.includes('AI搜索')) {
+                    const smartSearchBtn = document.querySelector('.btn.primary');
+                    if (smartSearchBtn && smartSearchBtn.textContent.includes('智能搜索')) {
+                        smartSearchBtn.click();
+                    }
+                } else if (command.includes('朗读') && command.includes('药材')) {
+                    const readButtons = document.querySelectorAll('.read-btn');
+                    if (readButtons.length > 0) {
+                        readButtons[0].click(); // 朗读第一个药材
+                    }
+                } else if (command.includes('停止') || command.includes('终止')) {
+                    this.stopSpeaking();
+                }
+            }
+            
+            // 处理通用命令
+            handleGeneralCommands(command) {
+                if (command.includes('首页') || command.includes('主页')) {
+                    this.speakText('正在跳转到首页');
+                    window.location.href = 'index.html';
+                } else if (command.includes('方案') || command.includes('计划')) {
+                    this.speakText('正在跳转到康养方案页面');
+                    window.location.href = 'plan.html';
+                } else if (command.includes('评估') || command.includes('测试')) {
+                    this.speakText('正在跳转到健康评估页面');
+                    window.location.href = 'evaluation.html';
+                } else if (command.includes('药材') || command.includes('中药')) {
+                    this.speakText('正在跳转到药材查询页面');
+                    window.location.href = 'herbs.html';
+                } else if (command.includes('医生') || command.includes('咨询')) {
+                    this.speakText('正在跳转到AI医生页面');
+                    window.location.href = 'ai_doctor.html';
+                } else if (command.includes('关于') || command.includes('介绍')) {
+                    this.speakText('正在跳转到关于页面');
+                    window.location.href = 'about.html';
+                } else if (command.includes('停止') || command.includes('终止')) {
+                    this.stopSpeaking();
+                } else {
+                    this.speakText('抱歉，我没有理解您的指令。您可以说"创建方案"、"提醒吃药"或"健康曲线"等指令');
+                }
+            }
+            
+            // 更新语音按钮状态
+            updateSpeechButton() {
+                const speechBtn = document.getElementById('speechToggle');
+                if (!speechBtn) return;
+                
+                speechBtn.classList.remove('listening', 'speaking');
+                
+                if (this.isListening) {
+                    speechBtn.classList.add('listening');
+                } else if (this.isSpeaking) {
+                    speechBtn.classList.add('speaking');
+                }
+            }
+            
+            // 切换语音功能
+            toggleSpeech() {
+                if (this.isListening) {
+                    this.stopListening();
+                } else if (this.isSpeaking) {
+                    this.stopSpeaking();
+                } else {
+                    this.startListening();
+                }
+            }
+        }
+
+        // 初始化语音助手
+        document.addEventListener('DOMContentLoaded', () => {
+            window.speechHelper = new SpeechHelper();
+            
+            // 初始化现有方案
+            initExistingPlans();
+            
+            // 初始化健康图表
+            initHealthChart();
+            
+            // 绑定生成方案事件
+            const genPlanBtn = document.getElementById('genPlan');
+            if (genPlanBtn) {
+                genPlanBtn.addEventListener('click', generatePersonalizedPlan);
+            }
+            
+            // 绑定分类筛选事件
+            bindCategoryEvents();
+            
+            // 绑定字体大小控制
+            bindFontControls();
+            
+            // 绑定高对比度切换
+            bindContrastToggle();
+            
+            // 绑定紧急联系按钮
+            bindEmergencyButtons();
+            
+            // 绑定语音助手
+            bindSpeechAssistant();
+        });
+
+        // 初始化现有方案
+        function initExistingPlans() {
+            const plansContainer = document.getElementById('plans');
+            
+            // 添加默认方案
+            const defaultPlans = [
+                {
+                    id: 'plan-default-1',
+                    title: '基础康养方案',
+                    category: 'daily',
+                    date: new Date().toLocaleDateString(),
+                    sections: [
+                        {
+                            title: '日常活动',
+                            icon: 'fas fa-calendar-day',
+                            items: [
+                                '每日晨间散步30分钟',
+                                '午休1小时保证充足休息',
+                                '晚间进行放松活动'
+                            ]
+                        },
+                        {
+                            title: '饮食建议',
+                            icon: 'fas fa-utensils',
+                            items: [
+                                '早餐：燕麦粥+鸡蛋',
+                                '午餐：均衡营养餐',
+                                '晚餐：清淡易消化食物'
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'plan-default-2', 
+                    title: '中医调理方案',
+                    category: 'diet',
+                    date: new Date().toLocaleDateString(),
+                    sections: [
+                        {
+                            title: '穴位按摩',
+                            icon: 'fas fa-hand-holding-heart',
+                            items: [
+                                '每日按摩足三里穴位5分钟',
+                                '睡前按摩涌泉穴促进睡眠',
+                                '按压合谷穴缓解疲劳'
+                            ]
+                        },
+                        {
+                            title: '食疗建议',
+                            icon: 'fas fa-mortar-pestle',
+                            items: [
+                                '适量食用枸杞红枣茶',
+                                '山药粥调理脾胃',
+                                '菊花茶清热明目'
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'plan-default-3',
+                    title: '关节保健方案',
+                    category: 'exercise',
+                    date: new Date().toLocaleDateString(),
+                    sections: [
+                        {
+                            title: '关节运动',
+                            icon: 'fas fa-running',
+                            items: [
+                                '晨起关节热身操10分钟',
+                                '坐姿下肢锻炼15分钟',
+                                '平衡能力训练10分钟'
+                            ]
+                        },
+                        {
+                            title: '日常注意',
+                            icon: 'fas fa-exclamation-circle',
+                            items: [
+                                '避免长时间站立',
+                                '上下楼梯扶好扶手',
+                                '注意关节保暖'
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'plan-default-4',
+                    title: '心理健康方案',
+                    category: 'mental',
+                    date: new Date().toLocaleDateString(),
+                    sections: [
+                        {
+                            title: '情绪调节',
+                            icon: 'fas fa-smile',
+                            items: [
+                                '每日记录情绪日记',
+                                '正念冥想练习10分钟',
+                                '与家人朋友保持沟通'
+                            ]
+                        },
+                        {
+                            title: '认知训练',
+                            icon: 'fas fa-brain',
+                            items: [
+                                '每日阅读报纸或书籍',
+                                '玩益智游戏如拼图、数独',
+                                '学习新技能或爱好'
+                            ]
+                        }
+                    ]
+                }
+            ];
+            
+            defaultPlans.forEach(plan => {
+                const planElement = createPlanElement(plan);
+                plansContainer.appendChild(planElement);
+                
+                // 添加动画效果
+                setTimeout(() => {
+                    planElement.classList.add('show');
+                }, 100);
+            });
+        }
+
+        // 创建方案元素
+        function createPlanElement(plan) {
+            const planElement = document.createElement('div');
+            planElement.className = 'plan-card';
+            planElement.setAttribute('data-plan', plan.id);
+            planElement.setAttribute('data-category', plan.category);
+            
+            let sectionsHTML = '';
+            plan.sections.forEach(section => {
+                sectionsHTML += `
+                    <div class="plan-section-item">
+                        <h5><i class="${section.icon}"></i> ${section.title}</h5>
+                        <ul>
+                            ${section.items.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+            
+            planElement.innerHTML = `
+                <div class="plan-header">
+                    <h4>${plan.title}</h4>
+                    <span class="plan-date">${plan.date}</span>
+                </div>
+                <div class="plan-content">
+                    ${sectionsHTML}
+                </div>
+                <div class="plan-actions">
+                    <button class="btn btn-outline btn-small" onclick="savePlan('${plan.id}')">
+                        <i class="fas fa-bookmark"></i> 保存方案
+                    </button>
+                    <button class="btn btn-primary btn-small" onclick="sharePlan('${plan.id}')">
+                        <i class="fas fa-share-alt"></i> 分享给家属
+                    </button>
+                    <button class="btn btn-outline btn-small" onclick="speakPlan('${plan.id}')">
+                        <i class="fas fa-volume-up"></i> 朗读方案
+                    </button>
+                </div>
+            `;
+            
+            return planElement;
+        }
+
+        // 绑定分类筛选事件
+        function bindCategoryEvents() {
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            const planCards = document.querySelectorAll('.plan-card');
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有按钮的active类
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    // 为当前点击的按钮添加active类
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    // 筛选卡片
+                    planCards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.classList.add('show');
+                            }, 50);
+                        } else {
+                            card.classList.remove('show');
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+        }
+
+        // 生成个性化方案
+        function generatePersonalizedPlan() {
+            showMessage('正在生成个性化康养方案...', 'info');
+            
+            // 模拟AI生成方案的过程
+            setTimeout(() => {
+                const plansContainer = document.getElementById('plans');
+                const newPlanId = 'plan-' + Date.now();
+                
+                const personalizedPlan = {
+                    id: newPlanId,
+                    title: 'AI个性化康养方案',
+                    category: 'daily',
+                    date: new Date().toLocaleDateString(),
+                    sections: [
+                        {
+                            title: '运动康复',
+                            icon: 'fas fa-walking',
+                            items: [
+                                '每日早晨散步30分钟',
+                                '下午进行平衡训练15分钟',
+                                '每周3次柔韧性练习'
+                            ]
+                        },
+                        {
+                            title: '饮食调理',
+                            icon: 'fas fa-utensils',
+                            items: [
+                                '早餐：燕麦粥+鸡蛋',
+                                '午餐：鱼肉+蔬菜+杂粮饭',
+                                '晚餐：清淡易消化食物'
+                            ]
+                        },
+                        {
+                            title: '健康监测',
+                            icon: 'fas fa-heartbeat',
+                            items: [
+                                '每日测量血压2次',
+                                '每周记录体重变化',
+                                '每月进行健康评估'
+                            ]
+                        }
+                    ]
+                };
+                
+                const planElement = createPlanElement(personalizedPlan);
+                plansContainer.prepend(planElement);
+                
+                // 添加动画效果
+                setTimeout(() => {
+                    planElement.classList.add('show');
+                }, 10);
+                
+                showMessage('个性化康养方案生成成功！', 'success');
+                
+                // 朗读新生成的方案
+                setTimeout(() => {
+                    speakPlan(newPlanId);
+                }, 1000);
+                
+            }, 2000);
+        }
+
+        // 朗读方案
+        function speakPlan(planId) {
+            if (window.speechHelper) {
+                window.speechHelper.speakPlan(planId);
+            }
+        }
+
+        // 保存方案
+        function savePlan(planId) {
+            showMessage('方案已保存到个人中心', 'success');
+        }
+
+        // 分享方案
+        function sharePlan(planId) {
+            showMessage('方案分享功能开发中', 'info');
+        }
+
+        // 初始化健康图表
+        function initHealthChart() {
+            const canvas = document.querySelector('#healthChart canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            
+            // 绘制简单的健康数据曲线
+            const data = [65, 59, 80, 81, 56, 55, 70, 75, 72, 68, 76, 74];
+            const labels = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+            
+            // 绘制背景
+            ctx.fillStyle = '#f8f9fa';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 绘制坐标轴
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(30, 20);
+            ctx.lineTo(30, canvas.height - 20);
+            ctx.lineTo(canvas.width - 10, canvas.height - 20);
+            ctx.stroke();
+            
+            // 绘制数据线
+            ctx.strokeStyle = '#2a8f7a';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            
+            const maxValue = Math.max(...data);
+            const minValue = Math.min(...data);
+            const range = maxValue - minValue;
+            const yScale = (canvas.height - 40) / range;
+            const xScale = (canvas.width - 40) / (data.length - 1);
+            
+            data.forEach((value, index) => {
+                const x = 30 + index * xScale;
+                const y = canvas.height - 20 - (value - minValue) * yScale;
+                
+                if (index === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+                
+                // 绘制数据点
+                ctx.fillStyle = '#2a8f7a';
+                ctx.beginPath();
+                ctx.arc(x, y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            ctx.stroke();
+            
+            // 绘制标签
+            ctx.fillStyle = '#666';
+            ctx.font = '10px Arial';
+            ctx.textAlign = 'center';
+            
+            labels.forEach((label, index) => {
+                const x = 30 + index * xScale;
+                ctx.fillText(label, x, canvas.height - 5);
+            });
+        }
+
+        // 绑定字体大小控制
+        function bindFontControls() {
+            const fontSmall = document.getElementById('fontSmall');
+            const fontMedium = document.getElementById('fontMedium');
+            const fontLarge = document.getElementById('fontLarge');
+            
+            fontSmall.addEventListener('click', () => {
+                document.documentElement.style.fontSize = '14px';
+                showMessage('字体大小已调整为小号', 'info');
+            });
+            
+            fontMedium.addEventListener('click', () => {
+                document.documentElement.style.fontSize = '16px';
+                showMessage('字体大小已调整为中号', 'info');
+            });
+            
+            fontLarge.addEventListener('click', () => {
+                document.documentElement.style.fontSize = '18px';
+                showMessage('字体大小已调整为大号', 'info');
+            });
+        }
+
+        // 绑定高对比度切换
+        function bindContrastToggle() {
+            const contrastToggle = document.getElementById('contrastToggle');
+            let isContrastMode = false;
+            
+            contrastToggle.addEventListener('click', () => {
+                isContrastMode = !isContrastMode;
+                
+                if (isContrastMode) {
+                    document.body.classList.add('contrast-mode');
+                    contrastToggle.innerHTML = '<i class="fas fa-adjust"></i><span>普通模式</span>';
+                    showMessage('已切换到高对比度模式', 'info');
+                } else {
+                    document.body.classList.remove('contrast-mode');
+                    contrastToggle.innerHTML = '<i class="fas fa-adjust"></i><span>高对比度</span>';
+                    showMessage('已切换到普通模式', 'info');
+                }
+            });
+        }
+
+        // 绑定紧急联系按钮
+        function bindEmergencyButtons() {
+            const callFamily = document.getElementById('callFamily');
+            const callEmergency = document.getElementById('callEmergency');
+            const callNeighbor = document.getElementById('callNeighbor');
+            
+            callFamily.addEventListener('click', () => {
+                showMessage('正在呼叫家人...', 'info');
+                if (window.speechHelper) {
+                    window.speechHelper.speakText('正在呼叫家人，请稍等');
+                }
+            });
+            
+            callEmergency.addEventListener('click', () => {
+                showMessage('正在拨打120急救电话...', 'warning');
+                if (window.speechHelper) {
+                    window.speechHelper.speakText('正在拨打120急救电话，请保持冷静');
+                }
+            });
+            
+            callNeighbor.addEventListener('click', () => {
+                showMessage('正在呼叫邻居...', 'info');
+                if (window.speechHelper) {
+                    window.speechHelper.speakText('正在呼叫邻居，请稍等');
+                }
+            });
+        }
+
+        // 绑定语音助手
+        function bindSpeechAssistant() {
+            const speechToggle = document.getElementById('speechToggle');
+            
+            speechToggle.addEventListener('click', () => {
+                if (window.speechHelper) {
+                    window.speechHelper.toggleSpeech();
+                }
+            });
+        }
+
+        // 显示消息提示
+        function showMessage(text, type) {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = text;
+            messageEl.className = `message ${type} show`;
+            
+            setTimeout(() => {
+                messageEl.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

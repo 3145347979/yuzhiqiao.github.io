@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>个人评估 - 愈知桥</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* 弹窗样式 */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .modal-content {
+      position: relative;
+      background-color: white;
+      margin: 50px auto;
+      padding: 0;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      animation: modalSlideIn 0.3s ease-out;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #666;
+      cursor: pointer;
+      z-index: 1001;
+      background: none;
+      border: none;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .close-modal:hover {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+
+    /* 调查问卷弹窗特定样式 */
+    .survey-modal .survey-section {
+      padding: 40px 0;
+    }
+
+    .survey-modal .survey-container {
+      margin: 0 auto;
+      box-shadow: none;
+    }
+
+    .survey-modal .section-title {
+      margin-top: 20px;
+    }
+
+    /* 按钮样式增强 */
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: linear-gradient(135deg, #4a9f9f, #3a8a8a);
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(74, 159, 159, 0.3);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(74, 159, 159, 0.4);
+    }
+
+    .btn.ghost {
+      background: transparent;
+      border: 2px solid #4a9f9f;
+      color: #4a9f9f;
+      box-shadow: none;
+    }
+
+    .btn.ghost:hover {
+      background: #4a9f9f;
+      color: white;
+    }
+
+    /* 首页横幅样式 */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 100px 20px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e4edf5 100%);
+      border-radius: 20px;
+      margin-top: 20px;
+      margin-bottom: 40px;
+    }
+
+    .hero-content {
+      flex: 1;
+      padding-right: 40px;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: #5d6d7e;
+      line-height: 1.6;
+    }
+
+    .hero-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .floating-element {
+      width: 300px;
+      height: 300px;
+      background: linear-gradient(135deg, #4a9f9f, #f5a25d);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    /* 专业知识部分样式 */
+    .knowledge-section {
+      padding: 80px 0;
+      background: white;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-bottom: 50px;
+      color: #5d6d7e;
+    }
+
+    .knowledge-tabs {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .tab-buttons {
+      display: flex;
+      background: linear-gradient(135deg, #f8f9fa, #e4edf5);
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      color: #5d6d7e;
+      font-weight: 500;
+    }
+
+    .tab-btn.active {
+      background: white;
+      color: #4a9f9f;
+      border-bottom: 3px solid #4a9f9f;
+    }
+
+    .tab-btn:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.5);
+      color: #4a9f9f;
+    }
+
+    .tab-content {
+      padding: 40px;
+    }
+
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .tab-pane h3 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+      font-size: 1.5rem;
+    }
+
+    .tab-pane ul {
+      margin-left: 20px;
+      margin-top: 15px;
+    }
+
+    .tab-pane li {
+      margin-bottom: 10px;
+      color: #5d6d7e;
+    }
+
+    /* 课程推荐部分样式 */
+    .courses-section {
+      padding: 80px 0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e4edf5 100%);
+    }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .course-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      text-align: center;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .course-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .course-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .course-card h3 {
+      margin-bottom: 15px;
+      color: #2c3e50;
+    }
+
+    .course-card p {
+      margin-bottom: 20px;
+      color: #5d6d7e;
+      flex-grow: 1;
+    }
+
+    .course-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .level, .duration {
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .level {
+      background: rgba(74, 159, 159, 0.1);
+      color: #4a9f9f;
+    }
+
+    .duration {
+      background: rgba(245, 162, 93, 0.1);
+      color: #f5a25d;
+    }
+
+    .course-btn {
+      background: linear-gradient(135deg, #4a9f9f, #3a8a8a);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .course-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(74, 159, 159, 0.3);
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 60px 20px 40px;
+      }
+
+      .hero-content {
+        padding-right: 0;
+        margin-bottom: 40px;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .floating-element {
+        width: 200px;
+        height: 200px;
+      }
+
+      .tab-buttons {
+        flex-direction: column;
+      }
+
+      .modal-content {
+        width: 95%;
+        margin: 20px auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo"><img src="images/logo.jpg" alt="logo" /><span>愈知桥</span></div>
+    <nav class="nav">
+        <!-- 导航栏将由JavaScript动态生成 -->
+    </nav>
+    <button id="speechToggle" >
+  </header>
+
+  <!-- 首页横幅 -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h2 class="hero-title">老年人康养与康复理疗专业学习</h2>
+      <p class="hero-subtitle">为康复理疗学生量身打造的学习平台，提升专业技能，服务老年康养</p>
+      <button class="btn" id="startEvaluation">开始能力评估</button>
+    </div>
+    <div class="hero-image">
+      <div class="floating-element"></div>
+    </div>
+  </section>
+
+  <!-- 专业知识部分 -->
+  <section id="knowledge" class="knowledge-section">
+    <div class="container">
+      <h2 class="section-title">专业知识库</h2>
+      <p class="section-subtitle">康复理疗专业知识与最新研究</p>
+      
+      <div class="knowledge-tabs">
+        <div class="tab-buttons">
+          <button class="tab-btn active" data-tab="anatomy">老年解剖学</button>
+          <button class="tab-btn" data-tab="diseases">常见疾病</button>
+          <button class="tab-btn" data-tab="techniques">康复技术</button>
+          <button class="tab-btn" data-tab="cases">案例分析</button>
+        </div>
+        
+        <div class="tab-content">
+          <div class="tab-pane active" id="anatomy">
+            <h3>老年人身体结构与功能变化</h3>
+            <p>随着年龄增长，老年人的身体结构和功能会发生一系列变化，了解这些变化对于制定有效的康复方案至关重要。</p>
+            <ul>
+              <li>肌肉质量减少，肌力下降</li>
+              <li>骨密度降低，骨折风险增加</li>
+              <li>关节软骨磨损，活动范围受限</li>
+              <li>神经系统反应速度减慢</li>
+              <li>心血管系统功能减退</li>
+            </ul>
+          </div>
+          
+          <div class="tab-pane" id="diseases">
+            <h3>老年人常见疾病与康复需求</h3>
+            <p>老年人常见的健康问题需要针对性的康复干预，以改善生活质量和功能状态。</p>
+            <ul>
+              <li>骨关节炎与关节置换术后康复</li>
+              <li>中风后遗症的功能恢复</li>
+              <li>帕金森病的运动障碍管理</li>
+              <li>骨质疏松症的预防与干预</li>
+              <li>慢性疼痛的综合管理</li>
+            </ul>
+          </div>
+          
+          <div class="tab-pane" id="techniques">
+            <h3>老年人康复理疗常用技术</h3>
+            <p>针对老年人的特殊需求，康复理疗技术需要适当调整，确保安全有效。</p>
+            <ul>
+              <li>温和关节活动度训练</li>
+              <li>平衡与防跌倒训练</li>
+              <li>低强度力量训练</li>
+              <li>神经肌肉再教育技术</li>
+              <li>疼痛管理技术</li>
+            </ul>
+          </div>
+          
+          <div class="tab-pane" id="cases">
+            <h3>康复理疗成功案例分享</h3>
+            <p>通过实际案例学习康复理疗在老年人中的应用效果和注意事项。</p>
+            <ul>
+              <li>案例一：膝关节置换术后的康复历程</li>
+              <li>案例二：中风患者上肢功能恢复</li>
+              <li>案例三：帕金森病患者的平衡训练</li>
+              <li>案例四：慢性腰痛的综合治疗</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 课程推荐部分 -->
+  <section id="courses" class="courses-section">
+    <div class="container">
+      <h2 class="section-title">推荐学习课程</h2>
+      <p class="section-subtitle">根据您的评估结果，我们为您推荐以下课程</p>
+      
+      <div class="courses-grid">
+        <div class="course-card">
+          <div class="course-icon">
+            <span>🩺</span>
+          </div>
+          <h3>老年人基础生理学</h3>
+          <p>了解老年人身体变化特点，掌握常见老年疾病的病理基础。</p>
+          <div class="course-meta">
+            <span class="level">初级</span>
+            <span class="duration">20课时</span>
+          </div>
+          <button class="course-btn">查看详情</button>
+        </div>
+        
+        <div class="course-card">
+          <div class="course-icon">
+            <span>💆</span>
+          </div>
+          <h3>康复按摩技术</h3>
+          <p>学习针对老年人的专业按摩手法，缓解肌肉疼痛和关节僵硬。</p>
+          <div class="course-meta">
+            <span class="level">中级</span>
+            <span class="duration">30课时</span>
+          </div>
+          <button class="course-btn">查看详情</button>
+        </div>
+        
+        <div class="course-card">
+          <div class="course-icon">
+            <span>🧘</span>
+          </div>
+          <h3>老年人运动康复</h3>
+          <p>设计适合老年人的运动方案，改善平衡能力和身体功能。</p>
+          <div class="course-meta">
+            <span class="level">高级</span>
+            <span class="duration">35课时</span>
+          </div>
+          <button class="course-btn">查看详情</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 调查问卷弹窗 -->
+  <div id="surveyModal" class="modal survey-modal">
+    <div class="modal-content">
+      <button class="close-modal">&times;</button>
+      
+      <!-- 调查问卷部分 -->
+      <section id="survey" class="survey-section">
+        <div class="container">
+          <h2 class="section-title">康复理疗能力评估</h2>
+          <p class="section-subtitle">完成以下问卷，获取个性化学习建议</p>
+          
+          <div class="survey-container">
+            <div class="progress-bar">
+              <div class="progress" id="progress"></div>
+            </div>
+            
+            <form id="survey-form">
+              <!-- 问题1 -->
+              <div class="question active" id="q1">
+                <h3>1. 您目前的学习阶段是？</h3>
+                <div class="options">
+                  <label class="option">
+                    <input type="radio" name="q1" value="beginner">
+                    <span>初学者（刚接触康复理疗）</span>
+                  </label>
+                  <label class="option">
+                    <input type="radio" name="q1" value="intermediate">
+                    <span>中级（有一定理论基础）</span>
+                  </label>
+                  <label class="option">
+                    <input type="radio" name="q1" value="advanced">
+                    <span>高级（有实践经验）</span>
+                  </label>
+                </div>
+                <button type="button" class="next-btn" onclick="nextQuestion(1)">下一题</button>
+              </div>
+              
+              <!-- 问题2 -->
+              <div class="question" id="q2">
+                <h3>2. 您对老年人常见疾病的了解程度？</h3>
+                <div class="options">
+                  <label class="option">
+                    <input type="radio" name="q2" value="limited">
+                    <span>了解有限</span>
+                  </label>
+                  <label class="option">
+                    <input type="radio" name="q2" value="basic">
+                    <span>了解基本知识</span>
+                  </label>
+                  <label class="option">
+                    <input type="radio" name="q2" value="comprehensive">
+                    <span>全面了解</span>
+                  </label>
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="prev-btn" onclick="prevQuestion(2)">上一题</button>
+                  <button type="button" class="next-btn" onclick="nextQuestion(2)">下一题</button>
+                </div>
+              </div>
+              
+              <!-- 问题3 -->
+              <div class="question" id="q3">
+                <h3>3. 您希望重点学习哪方面的康复理疗技术？</h3>
+                <div class="options">
+                  <label class="option">
+                    <input type="radio" name="q3" value="massage">
+                    <span>按摩理疗</span>
+                  </label>
+                  <label class="option">
+                    <input type="radio" name="q3" value="exercise">
+                    <span>运动康复</span>
+                  </label>
+                  <label class="option">
+                    <input type="radio" name="q3" value="electro">
+                    <span>电疗技术</span>
+                  </label>
+                  <label class="option">
+                    <input type="radio" name="q3" value="comprehensive">
+                    <span>综合疗法</span>
+                  </label>
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="prev-btn" onclick="prevQuestion(3)">上一题</button>
+                  <button type="button" class="next-btn" onclick="nextQuestion(3)">下一题</button>
+                </div>
+              </div>
+              
+              <!-- 问题4 -->
+              <div class="question" id="q4">
+                <h3>4. 您每周可用于学习的时间大约是？</h3>
+                <div class="options">
+                  <label class="option">
+                    <input type="radio" name="q4" value="5h">
+                    <span>5小时以下</span>
+                  </label>
+                  <label class="option">
+                    <input type="radio" name="q4" value="5-10h">
+                    <span>5-10小时</span>
+                  </label>
+                  <label class="option">
+                    <input type="radio" name="q4" value="10h+">
+                    <span>10小时以上</span>
+                  </label>
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="prev-btn" onclick="prevQuestion(4)">上一题</button>
+                  <button type="button" class="next-btn" onclick="nextQuestion(4)">下一题</button>
+                </div>
+              </div>
+              
+              <!-- 问题5 -->
+              <div class="question" id="q5">
+                <h3>5. 您希望通过学习达到什么目标？</h3>
+                <div class="options">
+                  <label class="option">
+                    <input type="radio" name="q5" value="certificate">
+                    <span>获得资格证书</span>
+                  </label>
+                  <label class="option">
+                    <input type="radio" name="q5" value="skills">
+                    <span>掌握实用技能</span>
+                  </label>
+                  <label class="option">
+                    <input type="radio" name="q5" value="career">
+                    <span>职业发展</span>
+                  </label>
+                  <label class="option">
+                    <input type="radio" name="q5" value="interest">
+                    <span>个人兴趣</span>
+                  </label>
+                </div>
+                <div class="btn-group">
+                  <button type="button" class="prev-btn" onclick="prevQuestion(5)">上一题</button>
+                  <button type="submit" class="submit-btn">提交评估</button>
+                </div>
+              </div>
+            </form>
+            
+            <div class="result" id="result">
+              <h3>您的个性化学习建议</h3>
+              <div class="recommendation" id="recommendation">
+                <!-- 这里将通过JavaScript动态生成内容 -->
+              </div>
+              <button class="restart-btn" onclick="restartSurvey()">重新评估</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p>© 愈知桥：学生就业与年人康复双端价值共生做康养生态先行者</p>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/evaluation.js"></script>
+  <script src="js/tts_stt.js"></script>
+  <script>
+    window.pageName = 'evaluation';
+
+    // 弹窗控制
+    document.addEventListener('DOMContentLoaded', function() {
+      const modal = document.getElementById('surveyModal');
+      const startBtn = document.getElementById('startEvaluation');
+      const closeBtn = document.querySelector('.close-modal');
+
+      // 打开弹窗
+      startBtn.addEventListener('click', function() {
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // 防止背景滚动
+      });
+
+      // 关闭弹窗
+      closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      });
+
+      // 点击弹窗外部关闭
+      window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }
+      });
+
+      // 专业知识标签切换
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabPanes = document.querySelectorAll('.tab-pane');
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const tabId = this.getAttribute('data-tab');
+          
+          // 移除所有活动状态
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          tabPanes.forEach(pane => pane.classList.remove('active'));
+          
+          // 添加当前活动状态
+          this.classList.add('active');
+          document.getElementById(tabId).classList.add('active');
+        });
+      });
+
+      // 课程卡片点击效果
+      const courseCards = document.querySelectorAll('.course-card');
+      courseCards.forEach(card => {
+        card.addEventListener('click', function() {
+          alert('课程详情功能开发中...');
+        });
+      });
+    });
+
+    // 调查问卷功能
+    let currentQuestion = 1;
+    const totalQuestions = 5;
+
+    function updateProgress() {
+      const progress = document.getElementById('progress');
+      const percentage = ((currentQuestion - 1) / totalQuestions) * 100;
+      progress.style.width = `${percentage}%`;
+    }
+
+    function nextQuestion(current) {
+      const questionName = `q${current}`;
+      const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+      
+      if (!selectedOption) {
+        alert('请选择一个选项后再继续');
+        return;
+      }
+      
+      document.getElementById(`q${current}`).classList.remove('active');
+      currentQuestion = current + 1;
+      document.getElementById(`q${currentQuestion}`).classList.add('active');
+      updateProgress();
+    }
+
+    function prevQuestion(current) {
+      document.getElementById(`q${current}`).classList.remove('active');
+      currentQuestion = current - 1;
+      document.getElementById(`q${currentQuestion}`).classList.add('active');
+      updateProgress();
+    }
+
+    // 表单提交处理
+    document.getElementById('survey-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const answers = {};
+      for (let i = 1; i <= totalQuestions; i++) {
+        const questionName = `q${i}`;
+        const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+        if (selectedOption) {
+          answers[questionName] = selectedOption.value;
+        }
+      }
+      
+      document.querySelectorAll('.question').forEach(q => q.style.display = 'none');
+      const result = document.getElementById('result');
+      result.style.display = 'block';
+      generateRecommendation(answers);
+      document.getElementById('progress').style.width = '100%';
+    });
+
+    // 生成个性化学习建议
+    function generateRecommendation(answers) {
+      const recommendation = document.getElementById('recommendation');
+      let html = '<h4>基于您的评估结果：</h4><ul>';
+      
+      const level = answers.q1;
+      const knowledge = answers.q2;
+      const interest = answers.q3;
+      const time = answers.q4;
+      const goal = answers.q5;
+      
+      if (level === 'beginner') {
+        html += '<li>您处于初学阶段，建议从基础课程开始，逐步建立知识体系</li>';
+      } else if (level === 'intermediate') {
+        html += '<li>您已有一定基础，可以重点学习实践技能和高级理论</li>';
+      } else {
+        html += '<li>您已有丰富经验，建议关注最新研究进展和复杂病例处理</li>';
+      }
+      
+      if (knowledge === 'limited') {
+        html += '<li>建议系统学习老年人常见疾病知识，为康复实践打下基础</li>';
+      } else if (knowledge === 'basic') {
+        html += '<li>可以进一步深入学习疾病机制和康复原理</li>';
+      } else {
+        html += '<li>您的知识储备较好，可以关注前沿研究和特殊病例</li>';
+      }
+      
+      if (interest === 'massage') {
+        html += '<li>推荐重点关注按摩理疗相关课程和技术</li>';
+      } else if (interest === 'exercise') {
+        html += '<li>推荐重点关注运动康复和功能训练相关课程</li>';
+      } else if (interest === 'electro') {
+        html += '<li>推荐重点关注物理治疗和仪器使用相关课程</li>';
+      } else {
+        html += '<li>推荐关注综合康复疗法，建立全面的康复知识体系</li>';
+      }
+      
+      if (time === '5h') {
+        html += '<li>您的时间有限，建议选择精炼的核心课程，注重学习效率</li>';
+      } else if (time === '5-10h') {
+        html += '<li>您可以安排系统学习，建议每周固定时间，保持学习连贯性</li>';
+      } else {
+        html += '<li>您有充足的学习时间，可以全面深入学习各个领域</li>';
+      }
+      
+      if (goal === 'certificate') {
+        html += '<li>建议关注有认证资格的课程，为职业发展做好准备</li>';
+      } else if (goal === 'skills') {
+        html += '<li>建议多参与实践课程，注重技能培养和实际操作</li>';
+      } else if (goal === 'career') {
+        html += '<li>建议建立完整的知识体系，关注行业发展趋势</li>';
+      } else {
+        html += '<li>建议选择感兴趣的领域深入学习，享受学习过程</li>';
+      }
+      
+      html += '</ul><p class="recommendation-note">以上建议仅供参考，您可以根据自己的实际情况调整学习计划。</p>';
+      recommendation.innerHTML = html;
+    }
+
+    // 重新开始调查
+    function restartSurvey() {
+      document.getElementById('survey-form').reset();
+      document.getElementById('result').style.display = 'none';
+      document.querySelectorAll('.question').forEach((q, index) => {
+        q.style.display = 'none';
+        if (index === 0) {
+          q.classList.add('active');
+        } else {
+          q.classList.remove('active');
+        }
+      });
+      document.getElementById('progress').style.width = '0%';
+      currentQuestion = 1;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+	<script>
+	// 在页面加载前清除登录状态
+	(function() {
+	  const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+	  if (currentUser.isLoggedIn) {
+	    localStorage.removeItem('currentUser');
+	  }
+	})();
+	</script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>愈知桥：学生就业与年人康复双端价值共生做康养生态先行者</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animation.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="loader" class="loader">
+    <div class="logo-splash">
+      <img src="images/logo.jpg" alt="logo" />
+      <h1>愈知桥智能体平台</h1>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="logo">
+      <img src="images/logo.jpg" alt="logo" />
+      <span>愈知桥</span>
+    </div>
+    <nav class="nav">
+        <!-- 导航栏将由JavaScript动态生成 -->
+    </nav>
+    <div class="header-actions">
+      <div id="userInfo" class="user-info" style="display: none;">
+        <span id="userRoleDisplay"></span>
+        <button id="logoutBtn" class="btn small">退出</button>
+      </div>
+      <div id="loginSection">
+        <button id="loginBtn" class="btn primary">登录/注册</button>
+      </div>
+      <button class="btn-speech" id="speechToggle">
+        <span class="voice-icon">🎤</span>
+        <span class="voice-text">语音助手</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 登录模态框 -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>选择登录身份</h2>
+      <div class="login-options">
+        <div class="login-option senior-option" data-role="senior">
+          <div class="option-icon">👴</div>
+          <h3>老年用户</h3>
+          <p>大字体设计，简单操作<br>康养方案，健康监测</p>
+          <div class="feature-badges">
+            <span class="badge">大字界面</span>
+            <span class="badge">语音助手</span>
+            <span class="badge">健康监测</span>
+            <span class="badge">紧急联系</span>
+          </div>
+        </div>
+        <div class="login-option student-option" data-role="student">
+          <div class="option-icon">🎓</div>
+          <h3>学生用户</h3>
+          <p>专业学习，技能提升<br>能力评估，AI指导</p>
+          <div class="feature-badges">
+            <span class="badge">专业课程</span>
+            <span class="badge">AI教师</span>
+            <span class="badge">实践训练</span>
+            <span class="badge">证书认证</span>
+          </div>
+        </div>
+      </div>
+      <div class="login-actions">
+        <button id="confirmLogin" class="btn primary" disabled>确认登录</button>
+        <button id="cancelLogin" class="btn ghost">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="main-home">
+    <!-- 英雄区域 -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">
+            <span class="title-line">智慧康养</span>
+            <span class="title-line accent">健康相伴</span>
+          </h1>
+          <p class="hero-subtitle">全临床知识库驱动的智能康养平台，为您提供专业的健康管理服务</p>
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="stat-number" data-count="10000">0</div>
+              <div class="stat-label">服务用户</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number" data-count="500">0</div>
+              <div class="stat-label">专业课程</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number" data-count="99">0</div>
+              <div class="stat-label">满意度</div>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <button class="btn primary large" onclick="openLoginModal()">立即体验</button>
+            <button class="btn ghost large" onclick="scrollToFeatures()">了解更多</button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="floating-elements">
+            <div class="floating-card card-1">
+              <div class="card-icon">❤️</div>
+              <span>健康监测</span>
+            </div>
+            <div class="floating-card card-2">
+              <div class="card-icon">🧠</div>
+              <span>智能评估</span>
+            </div>
+            <div class="floating-card card-3">
+              <div class="card-icon">📚</div>
+              <span>专业学习</span>
+            </div>
+            <div class="floating-card card-4">
+              <div class="card-icon">👥</div>
+              <span>家属监护</span>
+            </div>
+          </div>
+          <div class="main-visual">
+            <div class="visual-circle"></div>
+            <img src="images/health-care.svg" alt="健康护理" class="health-illustration">
+          </div>
+        </div>
+      </div>
+	  <div class="hero-right">
+	    <!-- 可视化效果将在这里通过JS动态生成 -->
+	  </div>
+    </section>
+
+    <!-- 特性介绍 -->
+    <section class="features-section" id="features">
+      <div class="container">
+        <h2 class="section-title">核心功能</h2>
+        <p class="section-subtitle">全方位满足您的健康管理需求</p>
+        <div class="features-grid">
+          <div class="feature-card" data-aos="fade-up">
+            <div class="feature-icon">🔍</div>
+            <h3>智能健康评估</h3>
+            <p>基于中西医结合的评估体系，全面分析您的健康状况</p>
+            <ul class="feature-list">
+              <li>ADL日常生活能力评估</li>
+              <li>MMSE认知功能筛查</li>
+              <li>中医体质辨识</li>
+              <li>个性化报告生成</li>
+            </ul>
+          </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="feature-icon">📱</div>
+            <h3>多终端适配</h3>
+            <p>完美支持电脑、平板、手机等多种设备访问</p>
+            <ul class="feature-list">
+              <li>响应式设计</li>
+              <li>离线功能支持</li>
+              <li>语音交互</li>
+              <li>一键操作</li>
+            </ul>
+          </div>
+          <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="feature-icon">🤖</div>
+            <h3>AI智能助手</h3>
+            <p>24小时在线的智能助手，随时解答您的疑问</p>
+            <ul class="feature-list">
+              <li>自然语言对话</li>
+              <li>专业知识库</li>
+              <li>用药提醒</li>
+              <li>紧急指导</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 用户版本介绍 -->
+    <section class="versions-section">
+      <div class="container">
+        <h2 class="section-title">选择适合您的版本</h2>
+        <p class="section-subtitle">针对不同用户群体的定制化服务</p>
+        <div class="versions-grid">
+          <div class="version-card senior-version" data-aos="zoom-in">
+            <div class="version-header">
+              <div class="version-badge">推荐</div>
+              <div class="version-icon">👴</div>
+              <h3>老年版</h3>
+              <p class="version-desc">专为老年人设计的大字版界面</p>
+            </div>
+            <div class="version-features">
+              <div class="feature-item">
+                <span class="check-icon">✓</span>
+                <span>超大字体，清晰易读</span>
+              </div>
+              <div class="feature-item">
+                <span class="check-icon">✓</span>
+                <span>语音播报与输入</span>
+              </div>
+              <div class="feature-item">
+                <span class="check-icon">✓</span>
+                <span>一键紧急联系</span>
+              </div>
+              <div class="feature-item">
+                <span class="check-icon">✓</span>
+                <span>用药提醒服务</span>
+              </div>
+              <div class="feature-item">
+                <span class="check-icon">✓</span>
+                <span>健康数据追踪</span>
+              </div>
+            </div>
+            <div class="version-actions">
+              <button class="btn primary full-width" onclick="quickLogin('senior')">进入老年版</button>
+            </div>
+          </div>
+
+          <div class="version-card student-version" data-aos="zoom-in" data-aos-delay="200">
+            <div class="version-header">
+              <div class="version-badge student">专业</div>
+              <div class="version-icon">🎓</div>
+              <h3>学生版</h3>
+              <p class="version-desc">康复理疗专业学习平台</p>
+            </div>
+            <div class="version-features">
+              <div class="feature-item">
+                <span class="check-icon">✓</span>
+                <span>专业能力评估</span>
+              </div>
+              <div class="feature-item">
+                <span class="check-icon">✓</span>
+                <span>系统培训课程</span>
+              </div>
+              <div class="feature-item">
+                <span class="check-icon">✓</span>
+                <span>AI教师指导</span>
+              </div>
+              <div class="feature-item">
+                <span class="check-icon">✓</span>
+                <span>虚拟实践训练</span>
+              </div>
+              <div class="feature-item">
+                <span class="check-icon">✓</span>
+                <span>技能证书认证</span>
+              </div>
+            </div>
+            <div class="version-actions">
+              <button class="btn primary full-width" onclick="quickLogin('student')">进入学生版</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 数据展示 -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item" data-aos="fade-up">
+            <div class="stat-circle">
+              <span class="stat-icon">👥</span>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number" data-count="10000">0</div>
+              <div class="stat-label">累计服务用户</div>
+            </div>
+          </div>
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+            <div class="stat-circle">
+              <span class="stat-icon">📊</span>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number" data-count="500">0</div>
+              <div class="stat-label">专业课程资源</div>
+            </div>
+          </div>
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+            <div class="stat-circle">
+              <span class="stat-icon">⭐</span>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number" data-count="99">0</div>
+              <div class="stat-label">用户满意度</div>
+            </div>
+          </div>
+          <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+            <div class="stat-circle">
+              <span class="stat-icon">🏥</span>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number" data-count="50">0</div>
+              <div class="stat-label">合作医疗机构</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+ <footer class="site-footer">
+   <p>© 愈知桥：学生就业与年人康复双端价值共生做康养生态先行者</p>
+ </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/tts_stt.js"></script>
+  <script>
+    window.pageName = 'index';
+    
+    // 快速登录函数
+    function quickLogin(role) {
+      if (window.authManager) {
+        window.authManager.login(role);
+      }
+    }
+    
+    function openLoginModal() {
+      const modal = document.getElementById('loginModal');
+      if (modal) {
+        modal.style.display = 'flex';
+      }
+    }
+    
+    function scrollToFeatures() {
+      document.getElementById('features').scrollIntoView({ 
+        behavior: 'smooth' 
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI 医生 - “易”诊智汇</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo"><img src="images/logo.jpg" alt="logo" /><span>愈知桥</span></div>
+    <nav class="nav">
+        <!-- 导航栏将由JavaScript动态生成 -->
+    </nav>
+    <button id="speechToggle" class="btn-speech">语音助手</button>
+  </header>
+
+  <main class="container">
+    <h2>AI 医生</h2>
+    <p>支持文字/语音输入</p>
+
+    <div class="ai-panel">
+      <textarea id="symptomInput" rows="4" placeholder="描述症状，例如：最近头晕、睡眠不好..."></textarea>
+      <div class="ai-actions">
+        <button id="startVoice" class="btn">语音输入</button>
+        <button id="sendSymptom" class="btn primary">提交给AI</button>
+      </div>
+      <div id="aiResult" class="ai-result">AI 结果会显示在这里</div>
+    </div>
+  </main>
+  <footer class="site-footer">© 愈知桥：学生就业与年人康复双端价值共生做康养生态先行者</footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/ai_doctor.js"></script>
+  <script src="js/tts_stt.js"></script>
+  <script>window.pageName='ai_doctor';</script>
+</body>
+</html>

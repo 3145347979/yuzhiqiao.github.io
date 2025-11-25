@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>学生版 - 愈知桥</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+	  setTimeout(() => {
+	    const loader = document.getElementById('loader');
+	    if(loader) {
+	      loader.style.opacity = '0';
+	      setTimeout(() => {
+	        loader.style.display = 'none';
+	      }, 500);
+	    }
+	  }, 1500);
+  </script>
+</head>
+<body class="student-theme">
+  <div id="loader" class="loader">
+    <div class="logo-splash">
+      <img src="images/logo.jpg" alt="logo" />
+      <h1>学生版 - 愈知桥</h1>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="logo"><img src="images/logo.jpg" alt="logo" /><span>愈知桥</span></div>
+    <nav class="nav">
+        <!-- 导航栏将由JavaScript动态生成 -->
+    </nav>
+    <div class="user-actions">
+      <div id="userInfo" class="user-info">
+        <span id="userRoleDisplay">学生版</span>
+        <button id="logoutBtn" class="btn small">退出</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-header student">
+    <div class="header-content">
+      <h2>康复理疗学习中心</h2>
+      <p>专业能力评估，系统培训课程，AI教师指导，助您成为优秀的康复理疗师</p>
+      <div class="study-progress">
+        <div class="progress-info">
+          <span class="progress-label">学习进度</span>
+          <span class="progress-percent">68%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 68%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <!-- 学习概览 -->
+    <section class="learning-overview" style="margin-bottom: 50px;">
+      <div class="overview-cards">
+        <div class="overview-card study-time" data-aos="fade-up">
+          <div class="card-header">
+            <div class="card-icon">⏱️</div>
+            <h3>学习总时长</h3>
+          </div>
+          <div class="card-value">128</div>
+          <div class="card-unit">小时</div>
+          <div class="card-trend">
+            <span class="trend-icon">📈</span>
+            <span>本月增长 36小时</span>
+          </div>
+          <div class="study-chart">
+            <div class="chart-bar" style="height: 60%"></div>
+            <div class="chart-bar" style="height: 80%"></div>
+            <div class="chart-bar" style="height: 45%"></div>
+            <div class="chart-bar" style="height: 90%"></div>
+          </div>
+        </div>
+        
+        <div class="overview-card courses-completed" data-aos="fade-up" data-aos-delay="100">
+          <div class="card-header">
+            <div class="card-icon">✅</div>
+            <h3>已完成课程</h3>
+          </div>
+          <div class="card-value">15</div>
+          <div class="card-unit">门课程</div>
+          <div class="progress-circle">
+            <div class="circle-bg"></div>
+            <div class="circle-progress" style="--progress: 60;"></div>
+            <div class="circle-text">60%</div>
+          </div>
+          <div class="card-target">总课程：25门</div>
+        </div>
+        
+        <div class="overview-card certificates" data-aos="fade-up" data-aos-delay="200">
+          <div class="card-header">
+            <div class="card-icon">🏆</div>
+            <h3>获得证书</h3>
+          </div>
+          <div class="card-value">8</div>
+          <div class="card-unit">张证书</div>
+          <div class="certificate-badges">
+            <span class="badge">基础</span>
+            <span class="badge">进阶</span>
+            <span class="badge gold">高级</span>
+          </div>
+          <div class="card-status excellent">优秀</div>
+        </div>
+        
+        <div class="overview-card skills" data-aos="fade-up" data-aos-delay="300">
+          <div class="card-header">
+            <div class="card-icon">💪</div>
+            <h3>技能掌握</h3>
+          </div>
+          <div class="skill-meters">
+            <div class="skill-meter">
+              <span class="skill-name">按摩技术</span>
+              <div class="meter-bar">
+                <div class="meter-fill" style="width: 85%"></div>
+              </div>
+              <span class="skill-percent">85%</span>
+            </div>
+            <div class="skill-meter">
+              <span class="skill-name">康复评估</span>
+              <div class="meter-bar">
+                <div class="meter-fill" style="width: 72%"></div>
+              </div>
+              <span class="skill-percent">72%</span>
+            </div>
+            <div class="skill-meter">
+              <span class="skill-name">中医理论</span>
+              <div class="meter-bar">
+                <div class="meter-fill" style="width: 68%"></div>
+              </div>
+              <span class="skill-percent">68%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 快速学习入口 -->
+    <section class="quick-learning" style="margin-bottom: 50px;">
+      <h3 class="section-title">快速学习</h3>
+      <div class="features-grid">
+        <div class="feature-card" onclick="window.location.href='evaluation.html'" data-aos="zoom-in">
+          <div class="feature-icon">🔍</div>
+          <h3>能力评估</h3>
+          <p>专业的能力评估测试，了解自己的知识水平和技能短板</p>
+          <div class="feature-stats">
+            <span class="stat">上次评分：92</span>
+            <span class="stat">排名：前15%</span>
+          </div>
+          <button class="btn primary" style="margin-top: 15px; width: 100%;">开始评估</button>
+        </div>
+        
+        <div class="feature-card" onclick="window.location.href='ai_teacher.html'" data-aos="zoom-in" data-aos-delay="100">
+          <div class="feature-icon">👨‍🏫</div>
+          <h3>AI教师指导</h3>
+          <p>个性化的学习指导，解答学习疑问，提供专业建议</p>
+          <div class="teacher-status">
+            <span class="status online">在线</span>
+            <span class="response-time">平均响应：2分钟</span>
+          </div>
+          <button class="btn primary" style="margin-top: 15px; width: 100%;">咨询教师</button>
+        </div>
+		<div class="feature-card" onclick="window.location.href='discuss.html'" data-aos="zoom-in" data-aos-delay="300">
+				  <div class="feature-icon">💬</div>
+				  <h3>学生论坛</h3>
+				  <p>与同学交流学习经验</br>讨论专业问题</p>
+				  <div class="feature-stats">
+				    <span class="stat">今日新帖: 12</span>
+				    <span class="stat">在线: 56人</span>
+				  </div>
+				  <button class="btn primary" style="margin-top: 15px; width: 100%;">进入论坛</button>
+				</div>
+        
+        <div class="feature-card" data-aos="zoom-in" data-aos-delay="200">
+          <div class="feature-icon">📚</div>
+          <h3>课程学习</h3>
+          <p>系统的培训课程，涵盖康复理疗的各个领域</p>
+          <div class="course-progress">
+            <div class="progress-item">
+              <span>老年康复基础</span>
+              <span class="progress">75%</span>
+            </div>
+            <div class="progress-item">
+              <span>康复按摩技术</span>
+              <span class="progress">45%</span>
+            </div>
+          </div>
+          <button class="btn primary" style="margin-top: 15px; width: 100%;">查看课程</button>
+        </div>
+        
+        <div class="feature-card" data-aos="zoom-in" data-aos-delay="300">
+          <div class="feature-icon">💼</div>
+          <h3>实践训练</h3>
+          <p>虚拟实践环境，提升实际操作技能</p>
+          <div class="practice-stats">
+            <div class="stat-item">
+              <span class="stat-value">24</span>
+              <span class="stat-label">完成练习</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">88%</span>
+              <span class="stat-label">正确率</span>
+            </div>
+          </div>
+          <button class="btn primary" style="margin-top: 15px; width: 100%;">开始训练</button>
+        </div>
+		</div>
+    </section>
+
+    <!-- 推荐课程 -->
+    <section class="recommended-courses" style="margin-bottom: 50px;">
+      <div class="courses-header">
+        <h3 class="section-title">推荐课程</h3>
+        <a href="#" class="view-all">查看全部 →</a>
+      </div>
+      <div class="courses-grid">
+        <div class="course-card" data-aos="flip-left">
+          <div class="course-image" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+            <div class="course-icon">🩺</div>
+            <div class="course-level intermediate">中级</div>
+          </div>
+          <div class="course-content">
+            <h4>老年康复基础</h4>
+            <p>学习老年人常见疾病的康复原理和方法，掌握基础康复技能</p>
+            <div class="course-meta">
+              <span class="meta-item">📚 20课时</span>
+              <span class="meta-item">⏱️ 36小时</span>
+              <span class="meta-item">👥 1,245人学习</span>
+            </div>
+            <div class="course-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 75%"></div>
+              </div>
+              <span class="progress-text">75% 已完成</span>
+            </div>
+            <div class="course-actions">
+              <button class="btn primary small">继续学习</button>
+              <button class="btn ghost small">课程详情</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="course-card" data-aos="flip-left" data-aos-delay="100">
+          <div class="course-image" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+            <div class="course-icon">💆</div>
+            <div class="course-level advanced">高级</div>
+          </div>
+          <div class="course-content">
+            <h4>康复按摩技术</h4>
+            <p>掌握专业的按摩手法，学习针对不同症状的按摩技巧</p>
+            <div class="course-meta">
+              <span class="meta-item">📚 15课时</span>
+              <span class="meta-item">⏱️ 28小时</span>
+              <span class="meta-item">👥 892人学习</span>
+            </div>
+            <div class="course-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 45%"></div>
+              </div>
+              <span class="progress-text">45% 已完成</span>
+            </div>
+            <div class="course-actions">
+              <button class="btn primary small">继续学习</button>
+              <button class="btn ghost small">课程详情</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="course-card" data-aos="flip-left" data-aos-delay="200">
+          <div class="course-image" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+            <div class="course-icon">🧘</div>
+            <div class="course-level beginner">初级</div>
+          </div>
+          <div class="course-content">
+            <h4>运动康复训练</h4>
+            <p>学习设计科学的运动康复方案，帮助患者恢复功能</p>
+            <div class="course-meta">
+              <span class="meta-item">📚 18课时</span>
+              <span class="meta-item">⏱️ 32小时</span>
+              <span class="meta-item">👥 1,567人学习</span>
+            </div>
+            <div class="course-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 20%"></div>
+              </div>
+              <span class="progress-text">20% 已完成</span>
+            </div>
+            <div class="course-actions">
+              <button class="btn primary small">开始学习</button>
+              <button class="btn ghost small">课程详情</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 学习目标 -->
+    <section class="learning-goals" style="margin-bottom: 50px;">
+      <h3 class="section-title">本周学习目标</h3>
+      <div class="goals-grid">
+        <div class="goal-card" data-aos="fade-up">
+          <div class="goal-header">
+            <div class="goal-icon">📖</div>
+            <h4>课程学习</h4>
+          </div>
+          <div class="goal-progress">
+            <div class="progress-circle small">
+              <div class="circle-bg"></div>
+              <div class="circle-progress" style="--progress: 75;"></div>
+              <div class="circle-text">3/4</div>
+            </div>
+          </div>
+          <p>完成3门课程学习</p>
+          <div class="goal-details">
+            <span class="detail">已完成：老年康复基础</span>
+            <span class="detail">进行中：康复按摩技术</span>
+          </div>
+        </div>
+        
+        <div class="goal-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="goal-header">
+            <div class="goal-icon">💪</div>
+            <h4>实践练习</h4>
+          </div>
+          <div class="goal-progress">
+            <div class="progress-circle small">
+              <div class="circle-bg"></div>
+              <div class="circle-progress" style="--progress: 60;"></div>
+              <div class="circle-text">6/10</div>
+            </div>
+          </div>
+          <p>完成10次实践练习</p>
+          <div class="goal-details">
+            <span class="detail">按摩手法：4次</span>
+            <span class="detail">康复评估：2次</span>
+          </div>
+        </div>
+        
+        <div class="goal-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="goal-header">
+            <div class="goal-icon">📝</div>
+            <h4>知识测试</h4>
+          </div>
+          <div class="goal-progress">
+            <div class="progress-circle small">
+              <div class="circle-bg"></div>
+              <div class="circle-progress" style="--progress: 90;"></div>
+              <div class="circle-text">9/10</div>
+            </div>
+          </div>
+          <p>通过10次知识测试</p>
+          <div class="goal-details">
+            <span class="detail">平均得分：92</span>
+            <span class="detail">最佳表现：按摩技术</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 成就系统 -->
+    <section class="achievements" style="margin-bottom: 50px;">
+      <h3 class="section-title">学习成就</h3>
+      <div class="achievements-grid">
+        <div class="achievement-card" data-aos="zoom-in">
+          <div class="achievement-icon">🔥</div>
+          <h4>学习达人</h4>
+          <p>连续学习30天</p>
+          <div class="achievement-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 80%"></div>
+            </div>
+            <span>24/30天</span>
+          </div>
+        </div>
+        
+        <div class="achievement-card" data-aos="zoom-in" data-aos-delay="100">
+          <div class="achievement-icon">⚡</div>
+          <h4>快速学习者</h4>
+          <p>一周完成5门课程</p>
+          <div class="achievement-badge unlocked">已获得</div>
+        </div>
+        
+        <div class="achievement-card" data-aos="zoom-in" data-aos-delay="200">
+          <div class="achievement-icon">🎯</div>
+          <h4>精准掌握</h4>
+          <p>10次测试满分</p>
+          <div class="achievement-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 70%"></div>
+            </div>
+            <span>7/10次</span>
+          </div>
+        </div>
+        
+        <div class="achievement-card" data-aos="zoom-in" data-aos-delay="300">
+          <div class="achievement-icon">🌟</div>
+          <h4>技能大师</h4>
+          <p>掌握所有核心技能</p>
+          <div class="achievement-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 60%"></div>
+            </div>
+            <span>3/5技能</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 愈知桥：学生就业与年人康复双端价值共生做康养生态先行者</p>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/tts_stt.js"></script>
+  <script src="js/animation.js"></script>
+  <script>
+    window.pageName = 'student_index';
+    
+    // 设置学生版用户
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.authManager) {
+        const userData = {
+          role: 'student',
+          loginTime: new Date().toISOString(),
+          isLoggedIn: true
+        };
+        localStorage.setItem('currentUser', JSON.stringify(userData));
+        window.authManager.currentUser = userData;
+        window.authManager.updateUI();
+      }
+    });
+  </script>
+</body>
+</html>
